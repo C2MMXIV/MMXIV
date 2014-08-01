@@ -889,6 +889,9 @@ unsigned int static GetNextTargetRequired(const CBlockIndex* pindexLast, bool fP
     const CBlockIndex* pindexPrevPrev = GetLastBlockIndex(pindexPrev->pprev, fProofOfStake);
     if (pindexPrevPrev->pprev == NULL)
         return bnInitialHashTarget.GetCompact(); // second block
+        
+		if (!fProofOfStake && pindexLast->nHeight >= 23 && pindexLast->nHeight < 120)
+        return bnProofOfWorkLimit.GetCompact(); // most of the 1st 120 blocks
 
     int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
 
@@ -2000,7 +2003,7 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
         if (bnNewBlock > bnRequired)
         {
             if (pfrom)
-                pfrom->Misbehaving(100);
+                pfrom->Misbehaving(10);
             return error("ProcessBlock() : block with too little %s", pblock->IsProofOfStake()? "proof-of-stake" : "proof-of-work");
         }
     }
