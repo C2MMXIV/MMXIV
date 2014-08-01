@@ -15,10 +15,10 @@
 #include <string>
 #include "uint256.h"
 
-#define PPCOIN_PORT  9901
-#define RPC_PORT     9902
-#define TESTNET_PORT 9903
-#define TESTNET_RPC_PORT 9904
+#define PPCOIN_PORT  11065
+#define RPC_PORT     21065
+#define TESTNET_PORT 11066
+#define TESTNET_RPC_PORT 21066
 
 extern bool fTestNet;
 

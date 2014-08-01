@@ -5,6 +5,10 @@
 #include "init.h"
 #include "walletdb.h"
 
+#if QT_VERSION >= 0x050000
+#define toAscii toLatin1
+#endif
+
 OptionsModel::OptionsModel(QObject *parent) :
     QAbstractListModel(parent)
 {

@@ -1,6 +1,6 @@
 /*
  * W.J. van der Laan 2011-2012
- * The PPCoin Developers 2013
+ * The MMXIV Developers 2013
  */
 #include "bitcoingui.h"
 #include "clientmodel.h"
@@ -102,7 +102,7 @@ void InitMessage(const std::string &message)
 {
     if(splashref)
     {
-        splashref->showMessage(QString::fromStdString(message), Qt::AlignBottom|Qt::AlignHCenter, QColor(255,255,200));
+        splashref->showMessage(QString::fromStdString(message), Qt::AlignBottom|Qt::AlignHCenter, QColor(0,0,0));
         QApplication::instance()->processEvents();
     }
 }
@@ -125,7 +125,7 @@ std::string _(const char* psz)
 static void handleRunawayException(std::exception *e)
 {
     PrintExceptionContinue(e, "Runaway exception");
-    QMessageBox::critical(0, "Runaway exception", BitcoinGUI::tr("A fatal error occured. PPCoin can no longer continue safely and will quit.") + QString("\n\n") + QString::fromStdString(strMiscWarning));
+    QMessageBox::critical(0, "Runaway exception", BitcoinGUI::tr("A fatal error occured. MMXIV can no longer continue safely and will quit.") + QString("\n\n") + QString::fromStdString(strMiscWarning));
     exit(1);
 }
 
@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
     // Do this early as we don't want to bother initializing if we are just calling IPC
     for (int i = 1; i < argc; i++)
     {
-        if (strlen(argv[i]) >= 7 && strncasecmp(argv[i], "ppcoin:", 7) == 0)
+        if (strlen(argv[i]) >= 7 && strncasecmp(argv[i], "MMXIV:", 7) == 0)
         {
             const char *strURI = argv[i];
             try {
@@ -158,9 +158,11 @@ int main(int argc, char *argv[])
     }
 #endif
 
+#if QT_VERSION < 0x050000
     // Internal string conversion is all UTF-8
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
     QTextCodec::setCodecForCStrings(QTextCodec::codecForTr());
+#endif
 
     Q_INIT_RESOURCE(bitcoin);
     QApplication app(argc, argv);
@@ -178,12 +180,12 @@ int main(int argc, char *argv[])
 
     // Application identification (must be set before OptionsModel is initialized,
     // as it is used to locate QSettings)
-    app.setOrganizationName("PPCoin");
-    app.setOrganizationDomain("ppcoin.org");
+    app.setOrganizationName("MMXIV");
+    app.setOrganizationDomain("MMXIV.org");
     if(GetBoolArg("-testnet")) // Separate UI settings for testnet
-        app.setApplicationName("PPCoin-Qt-testnet");
+        app.setApplicationName("MMXIV-Qt-testnet");
     else
-        app.setApplicationName("PPCoin-Qt");
+        app.setApplicationName("MMXIV-Qt");
 
     // ... then GUI settings:
     OptionsModel optionsModel;
@@ -268,7 +270,7 @@ int main(int argc, char *argv[])
                 // Check for URI in argv
                 for (int i = 1; i < argc; i++)
                 {
-                    if (strlen(argv[i]) >= 7 && strncasecmp(argv[i], "ppcoin:", 7) == 0)
+                    if (strlen(argv[i]) >= 7 && strncasecmp(argv[i], "MMXIV:", 7) == 0)
                     {
                         const char *strURI = argv[i];
                         try {

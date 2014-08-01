@@ -9,6 +9,9 @@
 #include <QFont>
 #include <QLineEdit>
 #include <QUrl>
+#if QT_VERSION >= 0x050000
+#include <QUrlQuery>
+#endif
 #include <QTextDocument> // For Qt::escape
 #include <QAbstractItemView>
 #include <QApplication>
@@ -54,13 +57,18 @@ void setupAmountWidget(QLineEdit *widget, QWidget *parent)
 
 bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 {
-    if(uri.scheme() != QString("ppcoin"))
+    if(uri.scheme() != QString("MMXIV"))
         return false;
 
     SendCoinsRecipient rv;
     rv.address = uri.path();
     rv.amount = 0;
+#if QT_VERSION >= 0x050000    
+		QUrlQuery qu(uri);
+    QList<QPair<QString, QString> > items = qu.queryItems();
+#else
     QList<QPair<QString, QString> > items = uri.queryItems();
+#endif
     for (QList<QPair<QString, QString> >::iterator i = items.begin(); i != items.end(); i++)
     {
         bool fShouldReturnFalse = false;
@@ -103,9 +111,9 @@ bool parseBitcoinURI(QString uri, SendCoinsRecipient *out)
     //
     //    Cannot handle this later, because bitcoin:// will cause Qt to see the part after // as host,
     //    which will lowercase it (and thus invalidate the address).
-    if(uri.startsWith("ppcoin://"))
+    if(uri.startsWith("MMXIV://"))
     {
-        uri.replace(0, 9, "ppcoin:");
+        uri.replace(0, 9, "MMXIV:");
     }
     QUrl uriInstance(uri);
     return parseBitcoinURI(uriInstance, out);
@@ -113,7 +121,11 @@ bool parseBitcoinURI(QString uri, SendCoinsRecipient *out)
 
 QString HtmlEscape(const QString& str, bool fMultiLine)
 {
+#if QT_VERSION >= 0x050000
+    QString escaped = str.toHtmlEscaped();
+#else
     QString escaped = Qt::escape(str);
+#endif
     if(fMultiLine)
     {
         escaped = escaped.replace("\n", "<br>\n");
@@ -148,7 +160,11 @@ QString getSaveFileName(QWidget *parent, const QString &caption,
     QString myDir;
     if(dir.isEmpty()) // Default to user documents location
     {
+#if QT_VERSION >= 0x050000
+        myDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#else
         myDir = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+#endif
     }
     else
     {
