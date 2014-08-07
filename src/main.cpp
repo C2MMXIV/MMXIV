@@ -3950,14 +3950,16 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
     {
         if (fShutdown)
             return;
-            
+
         if (fProofOfStake && (GetTime() < nextAllowedBlock || GetAdjustedTime() < STAKE_START_TIME)) {
+            nLastCoinStakeSearchInterval = 0;
             Sleep(1000);
             continue;
         }
         
         while (vNodes.empty() || IsInitialBlockDownload())
         {
+            nLastCoinStakeSearchInterval = 0;
             Sleep(1000);
             if (fShutdown)
                 return;
@@ -3967,6 +3969,7 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
 
         while (pwallet->IsLocked())
         {
+            nLastCoinStakeSearchInterval = 0;
             strMintWarning = strMintMessage;
             Sleep(1000);
         }
