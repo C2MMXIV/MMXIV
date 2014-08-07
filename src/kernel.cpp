@@ -10,10 +10,10 @@
 using namespace std;
 
 // Protocol switch time of v0.3 kernel protocol
-unsigned int nProtocolV03SwitchTime     = 1363800000;
+unsigned int nProtocolV03SwitchTime     = STAKE_START_TIME + (86400 * 7);
 unsigned int nProtocolV03TestSwitchTime = 1359781000;
 // Protocol switch time of v0.4 kernel protocol
-unsigned int nProtocolV04SwitchTime     = 1399300000;
+unsigned int nProtocolV04SwitchTime     = nProtocolV03SwitchTime + (86400 * 7);
 unsigned int nProtocolV04TestSwitchTime = 1395700000;
 // TxDB upgrade time for v0.4 protocol
 // Note: v0.4 upgrade does not require block chain re-download. However,
@@ -29,8 +29,9 @@ unsigned int nModifierInterval = MODIFIER_INTERVAL;
 // Hard checkpoints of stake modifiers to ensure they are deterministic
 static std::map<int, unsigned int> mapStakeModifierCheckpoints =
     boost::assign::map_list_of
-    (   0, 0x0e00670b )
-    ( 500, 0x51305bdb )
+    (    0, 0x0E00670B )
+    (  500, 0x1393E203 )
+    ( 4000, 0xEC7B2732 )
     ;
 
 // Whether the given coinstake is subject to new v0.3 protocol

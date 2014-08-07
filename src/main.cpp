@@ -34,6 +34,7 @@ set<pair<COutPoint, unsigned int> > setStakeSeen;
 uint256 hashGenesisBlock = hashGenesisBlockOfficial;
 static CBigNum bnProofOfWorkLimit(~uint256(0) >> 32);
 static CBigNum bnInitialHashTarget(~uint256(0) >> 40);
+static CBigNum bnProofOfStakeLimit(~uint256(0) >> 16);
 unsigned int nStakeMinAge = STAKE_MIN_AGE;
 int nCoinbaseMaturity = COINBASE_MATURITY_PPC;
 CBlockIndex* pindexGenesisBlock = NULL;
@@ -841,7 +842,7 @@ int64 GetProofOfWorkReward(uint256 hashPrevBlock)
 int64 GetProofOfStakeReward(int64 nCoinAge)
 {
     static int64 nRewardCoinYear = 50 * CENT;  // creation amount per coin-year
-    int64 nSubsidy = nCoinAge * 33 / (365 * 33 + 8) * nRewardCoinYear;
+    int64 nSubsidy = nRewardCoinYear * nCoinAge * 33 / (365 * 33 + 8);
     if (fDebug && GetBoolArg("-printcreation"))
         printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRI64d"\n", FormatMoney(nSubsidy).c_str(), nCoinAge);
     return nSubsidy;
@@ -854,19 +855,20 @@ static const int64 nTargetSpacingWorkMax = 30 * STAKE_TARGET_SPACING; // 1 hour
 // minimum amount of work that could possibly be required nTime after
 // minimum work required was nBase
 //
-unsigned int ComputeMinWork(unsigned int nBase, int64 nTime)
+unsigned int ComputeMinWork(unsigned int nBase, int64 nTime, bool fProofOfStake)
 {
-    CBigNum bnResult;
+    CBigNum bnResult, bnLimit;
+    bnLimit = fProofOfStake ? bnProofOfStakeLimit : bnProofOfWorkLimit;
     bnResult.SetCompact(nBase);
     bnResult *= 2;
-    while (nTime > 0 && bnResult < bnProofOfWorkLimit)
+    while (nTime > 0 && bnResult < bnLimit)
     {
         // Maximum 200% adjustment per day...
         bnResult *= 2;
         nTime -= 24 * 60 * 60;
     }
-    if (bnResult > bnProofOfWorkLimit)
-        bnResult = bnProofOfWorkLimit;
+    if (bnResult > bnLimit)
+        bnResult = bnLimit;
     return bnResult.GetCompact();
 }
 
@@ -880,15 +882,18 @@ const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfSta
 
 unsigned int static GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake)
 {
+	
+		CBigNum bnLimit = fProofOfStake ? bnProofOfStakeLimit : bnProofOfWorkLimit;
+			
     if (pindexLast == NULL)
-        return bnProofOfWorkLimit.GetCompact(); // genesis block
+        return bnLimit.GetCompact(); // genesis block
 
     const CBlockIndex* pindexPrev = GetLastBlockIndex(pindexLast, fProofOfStake);
     if (pindexPrev->pprev == NULL)
-        return bnInitialHashTarget.GetCompact(); // first block
+        return fProofOfStake ? bnProofOfStakeLimit.GetCompact() : bnInitialHashTarget.GetCompact(); // first block
     const CBlockIndex* pindexPrevPrev = GetLastBlockIndex(pindexPrev->pprev, fProofOfStake);
     if (pindexPrevPrev->pprev == NULL)
-        return bnInitialHashTarget.GetCompact(); // second block
+        return fProofOfStake ? bnProofOfStakeLimit.GetCompact() : bnInitialHashTarget.GetCompact(); // second block
         
 		if (!fProofOfStake && pindexLast->nHeight >= 23 && pindexLast->nHeight < 120)
         return bnProofOfWorkLimit.GetCompact(); // most of the 1st 120 blocks
@@ -904,8 +909,8 @@ unsigned int static GetNextTargetRequired(const CBlockIndex* pindexLast, bool fP
     bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
     bnNew /= ((nInterval + 1) * nTargetSpacing);
 
-    if (bnNew > bnProofOfWorkLimit)
-        bnNew = bnProofOfWorkLimit;
+    if (bnNew > bnLimit)
+        bnNew = bnLimit;
 
     return bnNew.GetCompact();
 }
@@ -1998,7 +2003,7 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
         CBigNum bnNewBlock;
         bnNewBlock.SetCompact(pblock->nBits);
         CBigNum bnRequired;
-        bnRequired.SetCompact(ComputeMinWork(GetLastBlockIndex(pcheckpoint, pblock->IsProofOfStake())->nBits, deltaTime));
+        bnRequired.SetCompact(ComputeMinWork(GetLastBlockIndex(pcheckpoint, pblock->IsProofOfStake())->nBits, deltaTime, pblock->IsProofOfStake()));
 
         if (bnNewBlock > bnRequired)
         {
@@ -2627,7 +2632,14 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         CAddress addrFrom;
         uint64 nNonce = 1;
         vRecv >> pfrom->nVersion >> pfrom->nServices >> nTime >> addrMe;
+        
+        bool badVersion = false;
         if (pfrom->nVersion < MIN_PROTO_VERSION)
+        	badVersion = true;
+        if (GetAdjustedTime() >= STAKE_START_TIME && pfrom->nVersion < 60005)
+        	badVersion = true;        	
+        	
+        if (badVersion)
         {
             // Since February 20, 2012, the protocol is initiated at version 209,
             // and earlier versions are no longer supported
@@ -3932,11 +3944,18 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
     // Each thread has its own key and counter
     CReserveKey reservekey(pwallet);
     unsigned int nExtraNonce = 0;
+    int64_t nextAllowedBlock = 0;
 
     while (fGenerateBitcoins || fProofOfStake)
     {
         if (fShutdown)
             return;
+            
+        if (fProofOfStake && (GetTime() < nextAllowedBlock || GetAdjustedTime() < STAKE_START_TIME)) {
+            Sleep(1000);
+            continue;
+        }
+        
         while (vNodes.empty() || IsInitialBlockDownload())
         {
             Sleep(1000);
@@ -3980,6 +3999,7 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
                 SetThreadPriority(THREAD_PRIORITY_NORMAL);
                 CheckWork(pblock.get(), *pwalletMain, reservekey);
                 SetThreadPriority(THREAD_PRIORITY_LOWEST);
+                nextAllowedBlock = GetTime() + 30 + GetRandInt(90);
             }
             Sleep(500);
             continue;
