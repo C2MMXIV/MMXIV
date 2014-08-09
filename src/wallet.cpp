@@ -1889,19 +1889,19 @@ void CWallet::GetAllReserveAddresses(set<CBitcoinAddress>& setAddress)
 }
 
 // Get time weight
-int64_t GetWeight(int64_t nIntervalBeginning, int64_t nIntervalEnd)
+int64 GetWeight(int64 nIntervalBeginning, int64 nIntervalEnd)
 {
     // Kernel hash weight starts from 0 at the min age
     // this change increases active coins participating the hash and helps
     // to secure the network when proof-of-stake difficulty is low
 
-    return min(nIntervalEnd - nIntervalBeginning - STAKE_MIN_AGE, (int64_t)STAKE_MAX_AGE);
+    return min(nIntervalEnd - nIntervalBeginning - STAKE_MIN_AGE, (int64)STAKE_MAX_AGE);
 }
 
-bool CWallet::GetStakeWeight(const CKeyStore& keystore, uint64_t& nMinWeight, uint64_t& nMaxWeight, uint64_t& nWeight)
+bool CWallet::GetStakeWeight(const CKeyStore& keystore, uint64& nMinWeight, uint64& nMaxWeight, uint64& nWeight)
 {
     // Choose coins to use
-    int64_t nBalance = GetBalance();
+    int64 nBalance = GetBalance();
     
     int64 nReserveBalance = 0;
     if (mapArgs.count("-reservebalance") && !ParseMoney(mapArgs["-reservebalance"], nReserveBalance))
@@ -1913,7 +1913,7 @@ bool CWallet::GetStakeWeight(const CKeyStore& keystore, uint64_t& nMinWeight, ui
     vector<const CWalletTx*> vwtxPrev;
 
     set<pair<const CWalletTx*,unsigned int> > setCoins;
-    int64_t nValueIn = 0;
+    int64 nValueIn = 0;
 
     if (!SelectCoins(nBalance - nReserveBalance, GetTime(), setCoins, nValueIn))
         return false;
@@ -1931,7 +1931,7 @@ bool CWallet::GetStakeWeight(const CKeyStore& keystore, uint64_t& nMinWeight, ui
                 continue;
         }
 
-        int64_t nTimeWeight = GetWeight((int64_t)pcoin.first->nTime, (int64_t)GetTime());
+        int64 nTimeWeight = GetWeight((int64)pcoin.first->nTime, (int64)GetTime());
         CBigNum bnCoinDayWeight = CBigNum(pcoin.first->vout[pcoin.second].nValue) * nTimeWeight / COIN / (24 * 60 * 60);
 
         // Weight is greater than zero
