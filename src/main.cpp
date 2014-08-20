@@ -905,6 +905,9 @@ unsigned int static GetNextTargetRequired(const CBlockIndex* pindexLast, bool fP
     CBigNum bnNew;
     bnNew.SetCompact(pindexPrev->nBits);
     int64 nTargetSpacing = fProofOfStake? STAKE_TARGET_SPACING : min(nTargetSpacingWorkMax, (int64) STAKE_TARGET_SPACING * (1 + pindexLast->nHeight - pindexPrev->nHeight));
+    if (pindexLast->GetBlockTime() >= STAKE_START_TIME && nActualSpacing < 0)
+        nActualSpacing = nTargetSpacing;
+
     int64 nInterval = nTargetTimespan / nTargetSpacing;
     bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
     bnNew /= ((nInterval + 1) * nTargetSpacing);
@@ -2634,10 +2637,10 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         vRecv >> pfrom->nVersion >> pfrom->nServices >> nTime >> addrMe;
         
         bool badVersion = false;
-        if (pfrom->nVersion < MIN_PROTO_VERSION)
+        if (pfrom->nVersion < 60005)
         	badVersion = true;
-        if (GetAdjustedTime() >= STAKE_START_TIME && pfrom->nVersion < 60005)
-        	badVersion = true;        	
+        if (GetAdjustedTime() >= STAKE_START_TIME && pfrom->nVersion < 60006)
+        	badVersion = true;
         	
         if (badVersion)
         {

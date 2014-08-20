@@ -15,8 +15,8 @@ extern unsigned int nModifierInterval;
 static const int MODIFIER_INTERVAL_RATIO = 3;
 
 // Protocol switch time of v0.3 kernel protocol
-extern unsigned int nProtocolV03SwitchTime;
-extern unsigned int nProtocolV03TestSwitchTime;
+//extern unsigned int nProtocolV03SwitchTime;
+//extern unsigned int nProtocolV03TestSwitchTime;
 // TxDB upgrade time for v0.4 protocol
 extern unsigned int nProtocolV04UpgradeTime;
 

@@ -10,11 +10,12 @@
 using namespace std;
 
 // Protocol switch time of v0.3 kernel protocol
-unsigned int nProtocolV03SwitchTime     = STAKE_START_TIME + (86400 * 7);
-unsigned int nProtocolV03TestSwitchTime = 1359781000;
+const unsigned int nOldProtocolV03SwitchTime  = 1408204800;
+const unsigned int nProtocolV03SwitchTime     = 1440050400;
+const unsigned int nProtocolV03TestSwitchTime = 1359781000;
 // Protocol switch time of v0.4 kernel protocol
-unsigned int nProtocolV04SwitchTime     = nProtocolV03SwitchTime + (86400 * 7);
-unsigned int nProtocolV04TestSwitchTime = 1395700000;
+const unsigned int nProtocolV04SwitchTime     = nProtocolV03SwitchTime + (86400 * 180);
+const unsigned int nProtocolV04TestSwitchTime = 1395700000;
 // TxDB upgrade time for v0.4 protocol
 // Note: v0.4 upgrade does not require block chain re-download. However,
 //       user must upgrade before the protocol switch deadline, otherwise
@@ -35,6 +36,9 @@ static std::map<int, unsigned int> mapStakeModifierCheckpoints =
 // Whether the given coinstake is subject to new v0.3 protocol
 bool IsProtocolV03(unsigned int nTimeCoinStake)
 {
+    if (!fTestNet && nTimeCoinStake >= nOldProtocolV03SwitchTime && nTimeCoinStake < STAKE_START_TIME)
+        return true;
+        
     return (nTimeCoinStake >= (fTestNet? nProtocolV03TestSwitchTime : nProtocolV03SwitchTime));
 }
 
