@@ -1663,8 +1663,9 @@ void StartNode(void* parg)
     GenerateBitcoins(GetBoolArg("-gen", false), pwalletMain);
 
     // MMXIV: mint proof-of-stake blocks in the background
-    if (!CreateThread(ThreadStakeMinter, pwalletMain))
-        printf("Error: CreateThread(ThreadStakeMinter) failed\n");
+    if (GetBoolArg("-staking", true))
+        if (!CreateThread(ThreadStakeMinter, pwalletMain))
+            printf("Error: CreateThread(ThreadStakeMinter) failed\n");
 }
 
 bool StopNode()
