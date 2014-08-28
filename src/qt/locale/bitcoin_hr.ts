@@ -4,17 +4,17 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../forms/aboutdialog.ui" line="14"/>
-        <source>About MMXIV</source>
-        <translation>O MMXIVu</translation>
+        <source>About Maieuticoin</source>
+        <translation>O Maieuticoinu</translation>
     </message>
     <message>
         <location filename="../forms/aboutdialog.ui" line="53"/>
-        <source>&lt;b&gt;MMXIV&lt;/b&gt; version</source>
-        <translation>&lt;b&gt;MMXIV&lt;/b&gt; verzija</translation>
+        <source>&lt;b&gt;Maieuticoin&lt;/b&gt; version</source>
+        <translation>&lt;b&gt;Maieuticoin&lt;/b&gt; verzija</translation>
     </message>
     <message>
         <location filename="../forms/aboutdialog.ui" line="85"/>
-        <source>Copyright © 2011-2013 MMXIV Developers
+        <source>Copyright © 2011-2013 Maieuticoin Developers
 
 This is experimental software.
 
@@ -33,8 +33,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location filename="../forms/addressbookpage.ui" line="20"/>
-        <source>These are your MMXIV addresses for receiving payments.  You may want to give a different one to each sender so you can keep track of who is paying you.</source>
-        <translation>Ovo su vaše MMXIV adrese za primanje isplate. Možda želite dati drukčiju adresu svakom primatelju tako da možete pratiti tko je platio.</translation>
+        <source>These are your Maieuticoin addresses for receiving payments.  You may want to give a different one to each sender so you can keep track of who is paying you.</source>
+        <translation>Ovo su vaše Maieuticoin adrese za primanje isplate. Možda želite dati drukčiju adresu svakom primatelju tako da možete pratiti tko je platio.</translation>
     </message>
     <message>
         <location filename="../forms/addressbookpage.ui" line="33"/>
@@ -220,9 +220,9 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location filename="../askpassphrasedialog.cpp" line="102"/>
-        <source>WARNING: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR MMXIVS&lt;/b&gt;!
+        <source>WARNING: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR MaieuticoinS&lt;/b&gt;!
 Are you sure you wish to encrypt your wallet?</source>
-        <translation>UPOZORENJE: Ako šifrirate vaš novčanik i izgubite lozinku, &lt;b&gt;IZGUBIT ĆETE SVE SVOJE MMXIVSE!&lt;/b&gt;
+        <translation>UPOZORENJE: Ako šifrirate vaš novčanik i izgubite lozinku, &lt;b&gt;IZGUBIT ĆETE SVE SVOJE MaieuticoinSE!&lt;/b&gt;
 Jeste li sigurni da želite šifrirati svoj novčanik?</translation>
     </message>
     <message>
@@ -233,7 +233,7 @@ Jeste li sigurni da želite šifrirati svoj novčanik?</translation>
     </message>
     <message>
         <location filename="../askpassphrasedialog.cpp" line="112"/>
-        <source>MMXIV will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your MMXIVs from being stolen by malware infecting your computer.</source>
+        <source>Maieuticoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your Maieuticoins from being stolen by malware infecting your computer.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -285,11 +285,11 @@ Jeste li sigurni da želite šifrirati svoj novčanik?</translation>
     </message>
 </context>
 <context>
-    <name>MMXIVGUI</name>
+    <name>MaieuticoinGUI</name>
     <message>
         <location filename="../bitcoingui.cpp" line="69"/>
-        <source>MMXIV Wallet</source>
-        <translation>MMXIV novčanik</translation>
+        <source>Maieuticoin Wallet</source>
+        <translation>Maieuticoin novčanik</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="142"/>
@@ -349,8 +349,8 @@ Jeste li sigurni da želite šifrirati svoj novčanik?</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="201"/>
-        <source>Send coins to a MMXIV address</source>
-        <translation>Slanje novca na MMXIV adresu</translation>
+        <source>Send coins to a Maieuticoin address</source>
+        <translation>Slanje novca na Maieuticoin adresu</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="206"/>
@@ -379,8 +379,8 @@ Jeste li sigurni da želite šifrirati svoj novčanik?</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="231"/>
-        <source>Show information about MMXIV</source>
-        <translation>Prikaži informacije o MMXIVu</translation>
+        <source>Show information about Maieuticoin</source>
+        <translation>Prikaži informacije o Maieuticoinu</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="233"/>
@@ -399,18 +399,18 @@ Jeste li sigurni da želite šifrirati svoj novčanik?</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="237"/>
-        <source>Modify configuration options for MMXIV</source>
-        <translation>Promijeni postavke konfiguracije za MMXIV</translation>
+        <source>Modify configuration options for Maieuticoin</source>
+        <translation>Promijeni postavke konfiguracije za Maieuticoin</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="239"/>
-        <source>Open &amp;MMXIV</source>
-        <translation>Otvori &amp;MMXIV</translation>
+        <source>Open &amp;Maieuticoin</source>
+        <translation>Otvori &amp;Maieuticoin</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="240"/>
-        <source>Show the MMXIV window</source>
-        <translation>Prikaži MMXIV prozor</translation>
+        <source>Show the Maieuticoin window</source>
+        <translation>Prikaži Maieuticoin prozor</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="241"/>
@@ -484,13 +484,13 @@ Jeste li sigurni da želite šifrirati svoj novčanik?</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="407"/>
-        <source>MMXIV-qt</source>
-        <translation>MMXIV-qt</translation>
+        <source>Maieuticoin-qt</source>
+        <translation>Maieuticoin-qt</translation>
     </message>
     <message numerus="yes">
         <location filename="../bitcoingui.cpp" line="449"/>
-        <source>%n active connection(s) to MMXIV network</source>
-        <translation><numerusform>%n aktivna veza na MMXIV mrežu</numerusform><numerusform>%n aktivne veze na MMXIV mrežu</numerusform><numerusform>%n aktivnih veza na MMXIV mrežu</numerusform></translation>
+        <source>%n active connection(s) to Maieuticoin network</source>
+        <translation><numerusform>%n aktivna veza na Maieuticoin mrežu</numerusform><numerusform>%n aktivne veze na Maieuticoin mrežu</numerusform><numerusform>%n aktivnih veza na Maieuticoin mrežu</numerusform></translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="475"/>
@@ -611,7 +611,7 @@ Adresa:%4
     <message>
         <location filename="../optionsdialog.cpp" line="274"/>
         <source>Choose the default subdivision unit to show in the interface, and when sending coins</source>
-        <translation>Izaberite željeni najmanji dio MMXIVa koji će biti prikazan u sučelju i koji će se koristiti za plaćanje.</translation>
+        <translation>Izaberite željeni najmanji dio Maieuticoina koji će biti prikazan u sučelju i koji će se koristiti za plaćanje.</translation>
     </message>
     <message>
         <location filename="../optionsdialog.cpp" line="281"/>
@@ -673,8 +673,8 @@ Adresa:%4
     </message>
     <message>
         <location filename="../editaddressdialog.cpp" line="96"/>
-        <source>The entered address &quot;%1&quot; is not a valid MMXIV address.</source>
-        <translation>Upisana adresa &quot;%1&quot; nije valjana MMXIV adresa.</translation>
+        <source>The entered address &quot;%1&quot; is not a valid Maieuticoin address.</source>
+        <translation>Upisana adresa &quot;%1&quot; nije valjana Maieuticoin adresa.</translation>
     </message>
     <message>
         <location filename="../editaddressdialog.cpp" line="101"/>
@@ -691,13 +691,13 @@ Adresa:%4
     <name>MainOptionsPage</name>
     <message>
         <location filename="../optionsdialog.cpp" line="170"/>
-        <source>&amp;Start MMXIV on window system startup</source>
-        <translation>&amp;Pokreni MMXIV kod pokretanja sustava</translation>
+        <source>&amp;Start Maieuticoin on window system startup</source>
+        <translation>&amp;Pokreni Maieuticoin kod pokretanja sustava</translation>
     </message>
     <message>
         <location filename="../optionsdialog.cpp" line="171"/>
-        <source>Automatically start MMXIV after the computer is turned on</source>
-        <translation>Automatski pokreni MMXIV kad se uključi računalo</translation>
+        <source>Automatically start Maieuticoin after the computer is turned on</source>
+        <translation>Automatski pokreni Maieuticoin kad se uključi računalo</translation>
     </message>
     <message>
         <location filename="../optionsdialog.cpp" line="175"/>
@@ -716,8 +716,8 @@ Adresa:%4
     </message>
     <message>
         <location filename="../optionsdialog.cpp" line="181"/>
-        <source>Automatically open the MMXIV client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Automatski otvori port MMXIV klijenta na ruteru. To radi samo ako ruter podržava UPnP i ako je omogućen.</translation>
+        <source>Automatically open the Maieuticoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Automatski otvori port Maieuticoin klijenta na ruteru. To radi samo ako ruter podržava UPnP i ako je omogućen.</translation>
     </message>
     <message>
         <location filename="../optionsdialog.cpp" line="185"/>
@@ -1177,8 +1177,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../sendcoinsentry.cpp" line="25"/>
-        <source>Enter a MMXIV address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Unesite MMXIV adresu (npr. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <source>Enter a Maieuticoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <translation>Unesite Maieuticoin adresu (npr. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
 </context>
 <context>
@@ -1626,11 +1626,11 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>MMXIV-core</name>
+    <name>Maieuticoin-core</name>
     <message>
         <location filename="../bitcoinstrings.cpp" line="3"/>
-        <source>MMXIV version</source>
-        <translation>MMXIV verzija</translation>
+        <source>Maieuticoin version</source>
+        <translation>Maieuticoin verzija</translation>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="4"/>
@@ -1639,8 +1639,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="5"/>
-        <source>Send command to -server or MMXIVd</source>
-        <translation>Pošalji komandu usluzi -server ili MMXIVd</translation>
+        <source>Send command to -server or Maieuticoind</source>
+        <translation>Pošalji komandu usluzi -server ili Maieuticoind</translation>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="6"/>
@@ -1664,7 +1664,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="10"/>
-        <source>Specify pid file (default: MMXIVd.pid)</source>
+        <source>Specify pid file (default: Maieuticoind.pid)</source>
         <translation>Odredi proces ID datoteku (ugrađeni izbor: mmxiv.pid)</translation>
     </message>
     <message>
@@ -1840,8 +1840,8 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../bitcoinstrings.cpp" line="47"/>
         <source>
-SSL options: (see the MMXIV Wiki for SSL setup instructions)</source>
-        <translation>SSL postavke: (za detalje o podešavanju SSL opcija vidi MMXIV Wiki)</translation>
+SSL options: (see the Maieuticoin Wiki for SSL setup instructions)</source>
+        <translation>SSL postavke: (za detalje o podešavanju SSL opcija vidi Maieuticoin Wiki)</translation>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="50"/>
@@ -1870,8 +1870,8 @@ SSL options: (see the MMXIV Wiki for SSL setup instructions)</source>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="57"/>
-        <source>Cannot obtain a lock on data directory %s.  MMXIV is probably already running.</source>
-        <translation>Program ne može pristupiti direktoriju s datotekama %s. MMXIV program je vjerojatno već pokrenut.</translation>
+        <source>Cannot obtain a lock on data directory %s.  Maieuticoin is probably already running.</source>
+        <translation>Program ne može pristupiti direktoriju s datotekama %s. Maieuticoin program je vjerojatno već pokrenut.</translation>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="60"/>
@@ -1895,12 +1895,12 @@ SSL options: (see the MMXIV Wiki for SSL setup instructions)</source>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="66"/>
-        <source>Error loading wallet.dat: Wallet requires newer version of MMXIV</source>
+        <source>Error loading wallet.dat: Wallet requires newer version of Maieuticoin</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="67"/>
-        <source>Wallet needed to be rewritten: restart MMXIV to complete</source>
+        <source>Wallet needed to be rewritten: restart Maieuticoin to complete</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1955,13 +1955,13 @@ SSL options: (see the MMXIV Wiki for SSL setup instructions)</source>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="78"/>
-        <source>Unable to bind to port %d on this computer.  MMXIV is probably already running.</source>
-        <translation>Program ne može koristiti port %d na ovom računalu.  MMXIV program je vjerojatno već pokrenut.</translation>
+        <source>Unable to bind to port %d on this computer.  Maieuticoin is probably already running.</source>
+        <translation>Program ne može koristiti port %d na ovom računalu.  Maieuticoin program je vjerojatno već pokrenut.</translation>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="81"/>
-        <source>Warning: Please check that your computer&apos;s date and time are correct.  If your clock is wrong MMXIV will not work properly.</source>
-        <translation>Upozorenje: Molimo provjerite jesu li datum i vrijeme na vašem računalu točni. Ako vaš sat ide krivo, MMXIV neće raditi ispravno.</translation>
+        <source>Warning: Please check that your computer&apos;s date and time are correct.  If your clock is wrong Maieuticoin will not work properly.</source>
+        <translation>Upozorenje: Molimo provjerite jesu li datum i vrijeme na vašem računalu točni. Ako vaš sat ide krivo, Maieuticoin neće raditi ispravno.</translation>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="84"/>

@@ -4,17 +4,17 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../forms/aboutdialog.ui" line="14"/>
-        <source>About MMXIV</source>
-        <translation>Om MMXIV</translation>
+        <source>About Maieuticoin</source>
+        <translation>Om Maieuticoin</translation>
     </message>
     <message>
         <location filename="../forms/aboutdialog.ui" line="53"/>
-        <source>&lt;b&gt;MMXIV&lt;/b&gt; version</source>
-        <translation>&lt;b&gt;MMXIV&lt;/b&gt; version</translation>
+        <source>&lt;b&gt;Maieuticoin&lt;/b&gt; version</source>
+        <translation>&lt;b&gt;Maieuticoin&lt;/b&gt; version</translation>
     </message>
     <message>
         <location filename="../forms/aboutdialog.ui" line="85"/>
-        <source>Copyright © 2011-2013 MMXIV Developers
+        <source>Copyright © 2011-2013 Maieuticoin Developers
 
 This is experimental software.
 
@@ -33,8 +33,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location filename="../forms/addressbookpage.ui" line="20"/>
-        <source>These are your MMXIV addresses for receiving payments.  You may want to give a different one to each sender so you can keep track of who is paying you.</source>
-        <translation>Detta är dina MMXIV-adresser för att ta emot betalningar. Du kan ge varje avsändare en egen adress så att du kan hålla reda på vem som betalar dig.</translation>
+        <source>These are your Maieuticoin addresses for receiving payments.  You may want to give a different one to each sender so you can keep track of who is paying you.</source>
+        <translation>Detta är dina Maieuticoin-adresser för att ta emot betalningar. Du kan ge varje avsändare en egen adress så att du kan hålla reda på vem som betalar dig.</translation>
     </message>
     <message>
         <location filename="../forms/addressbookpage.ui" line="33"/>
@@ -220,9 +220,9 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location filename="../askpassphrasedialog.cpp" line="102"/>
-        <source>WARNING: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR MMXIVS&lt;/b&gt;!
+        <source>WARNING: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR MaieuticoinS&lt;/b&gt;!
 Are you sure you wish to encrypt your wallet?</source>
-        <translation>VARNING: Om du krypterar din plånbok och glömmer din lösenfras, kommer du att &lt;b&gt;förlora alla dina MMXIVS!&lt;/b&gt; Är du säker på att du vill kryptera din plånbok?</translation>
+        <translation>VARNING: Om du krypterar din plånbok och glömmer din lösenfras, kommer du att &lt;b&gt;förlora alla dina MaieuticoinS!&lt;/b&gt; Är du säker på att du vill kryptera din plånbok?</translation>
     </message>
     <message>
         <location filename="../askpassphrasedialog.cpp" line="111"/>
@@ -232,7 +232,7 @@ Are you sure you wish to encrypt your wallet?</source>
     </message>
     <message>
         <location filename="../askpassphrasedialog.cpp" line="112"/>
-        <source>MMXIV will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your MMXIVs from being stolen by malware infecting your computer.</source>
+        <source>Maieuticoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your Maieuticoins from being stolen by malware infecting your computer.</source>
         <translation>Programmet kommer nu att stänga ner för att göra färdigt krypteringen. Notera att en krypterat konto inte skyddar mot all form av stöld på en infekterad dator. </translation>
     </message>
     <message>
@@ -284,11 +284,11 @@ Are you sure you wish to encrypt your wallet?</source>
     </message>
 </context>
 <context>
-    <name>MMXIVGUI</name>
+    <name>MaieuticoinGUI</name>
     <message>
         <location filename="../bitcoingui.cpp" line="69"/>
-        <source>MMXIV Wallet</source>
-        <translation>MMXIV-plånbok</translation>
+        <source>Maieuticoin Wallet</source>
+        <translation>Maieuticoin-plånbok</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="142"/>
@@ -334,7 +334,7 @@ Are you sure you wish to encrypt your wallet?</source>
     <message>
         <location filename="../bitcoingui.cpp" line="194"/>
         <source>&amp;Receive coins</source>
-        <translation>&amp;amp; Ta emot MMXIVs</translation>
+        <translation>&amp;amp; Ta emot Maieuticoins</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="195"/>
@@ -344,12 +344,12 @@ Are you sure you wish to encrypt your wallet?</source>
     <message>
         <location filename="../bitcoingui.cpp" line="200"/>
         <source>&amp;Send coins</source>
-        <translation>&amp;amp; Skicka MMXIVs</translation>
+        <translation>&amp;amp; Skicka Maieuticoins</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="201"/>
-        <source>Send coins to a MMXIV address</source>
-        <translation>Skicka MMXIVs till en MMXIVadress</translation>
+        <source>Send coins to a Maieuticoin address</source>
+        <translation>Skicka Maieuticoins till en Maieuticoinadress</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="206"/>
@@ -378,8 +378,8 @@ Are you sure you wish to encrypt your wallet?</source>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="231"/>
-        <source>Show information about MMXIV</source>
-        <translation>Visa information om MMXIV</translation>
+        <source>Show information about Maieuticoin</source>
+        <translation>Visa information om Maieuticoin</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="233"/>
@@ -398,18 +398,18 @@ Are you sure you wish to encrypt your wallet?</source>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="237"/>
-        <source>Modify configuration options for MMXIV</source>
-        <translation>Ändra konfigurationsalternativ för MMXIV</translation>
+        <source>Modify configuration options for Maieuticoin</source>
+        <translation>Ändra konfigurationsalternativ för Maieuticoin</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="239"/>
-        <source>Open &amp;MMXIV</source>
-        <translation>Öppna &amp;amp;MMXIV</translation>
+        <source>Open &amp;Maieuticoin</source>
+        <translation>Öppna &amp;amp;Maieuticoin</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="240"/>
-        <source>Show the MMXIV window</source>
-        <translation>Visa MMXIV-fönster</translation>
+        <source>Show the Maieuticoin window</source>
+        <translation>Visa Maieuticoin-fönster</translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="241"/>
@@ -483,13 +483,13 @@ Are you sure you wish to encrypt your wallet?</source>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="407"/>
-        <source>MMXIV-qt</source>
-        <translation>MMXIV-qt</translation>
+        <source>Maieuticoin-qt</source>
+        <translation>Maieuticoin-qt</translation>
     </message>
     <message numerus="yes">
         <location filename="../bitcoingui.cpp" line="449"/>
-        <source>%n active connection(s) to MMXIV network</source>
-        <translation><numerusform>%n aktiv anslutning till MMXIV-nätverket.</numerusform><numerusform>%n aktiva anslutningar till MMXIV-nätverket.</numerusform></translation>
+        <source>%n active connection(s) to Maieuticoin network</source>
+        <translation><numerusform>%n aktiv anslutning till Maieuticoin-nätverket.</numerusform><numerusform>%n aktiva anslutningar till Maieuticoin-nätverket.</numerusform></translation>
     </message>
     <message>
         <location filename="../bitcoingui.cpp" line="475"/>
@@ -676,8 +676,8 @@ Adress:%4
     </message>
     <message>
         <location filename="../editaddressdialog.cpp" line="96"/>
-        <source>The entered address &quot;%1&quot; is not a valid MMXIV address.</source>
-        <translation>Den angivna adressen &quot;%1&quot; är inte en giltig MMXIV-adress.</translation>
+        <source>The entered address &quot;%1&quot; is not a valid Maieuticoin address.</source>
+        <translation>Den angivna adressen &quot;%1&quot; är inte en giltig Maieuticoin-adress.</translation>
     </message>
     <message>
         <location filename="../editaddressdialog.cpp" line="101"/>
@@ -694,13 +694,13 @@ Adress:%4
     <name>MainOptionsPage</name>
     <message>
         <location filename="../optionsdialog.cpp" line="170"/>
-        <source>&amp;Start MMXIV on window system startup</source>
-        <translation>&amp;Starta MMXIV vid systemstart</translation>
+        <source>&amp;Start Maieuticoin on window system startup</source>
+        <translation>&amp;Starta Maieuticoin vid systemstart</translation>
     </message>
     <message>
         <location filename="../optionsdialog.cpp" line="171"/>
-        <source>Automatically start MMXIV after the computer is turned on</source>
-        <translation>Starta MMXIV automatiskt när datorn startas.</translation>
+        <source>Automatically start Maieuticoin after the computer is turned on</source>
+        <translation>Starta Maieuticoin automatiskt när datorn startas.</translation>
     </message>
     <message>
         <location filename="../optionsdialog.cpp" line="175"/>
@@ -719,8 +719,8 @@ Adress:%4
     </message>
     <message>
         <location filename="../optionsdialog.cpp" line="181"/>
-        <source>Automatically open the MMXIV client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Öppna automatiskt MMXIV-klientens port på routern. Detta fungerar endast om din router har UPnP aktiverat.</translation>
+        <source>Automatically open the Maieuticoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Öppna automatiskt Maieuticoin-klientens port på routern. Detta fungerar endast om din router har UPnP aktiverat.</translation>
     </message>
     <message>
         <location filename="../optionsdialog.cpp" line="185"/>
@@ -740,7 +740,7 @@ Adress:%4
     <message>
         <location filename="../optionsdialog.cpp" line="191"/>
         <source>Connect to the Bitcon network through a SOCKS4 proxy (e.g. when connecting through Tor)</source>
-        <translation>Anslut till MMXIV-nätverket genom en SOCKS4-proxy (t.ex. när du ansluter genom Tor).</translation>
+        <translation>Anslut till Maieuticoin-nätverket genom en SOCKS4-proxy (t.ex. när du ansluter genom Tor).</translation>
     </message>
     <message>
         <location filename="../optionsdialog.cpp" line="196"/>
@@ -1180,8 +1180,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../sendcoinsentry.cpp" line="25"/>
-        <source>Enter a MMXIV address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Ange en MMXIV adress (t.ex. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <source>Enter a Maieuticoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <translation>Ange en Maieuticoin adress (t.ex. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
 </context>
 <context>
@@ -1629,11 +1629,11 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>MMXIV-core</name>
+    <name>Maieuticoin-core</name>
     <message>
         <location filename="../bitcoinstrings.cpp" line="3"/>
-        <source>MMXIV version</source>
-        <translation>MMXIV version</translation>
+        <source>Maieuticoin version</source>
+        <translation>Maieuticoin version</translation>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="4"/>
@@ -1642,8 +1642,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="5"/>
-        <source>Send command to -server or MMXIVd</source>
-        <translation>Skicka kommando till -server eller MMXIVd</translation>
+        <source>Send command to -server or Maieuticoind</source>
+        <translation>Skicka kommando till -server eller Maieuticoind</translation>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="6"/>
@@ -1667,8 +1667,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="10"/>
-        <source>Specify pid file (default: MMXIVd.pid)</source>
-        <translation>Ange pid fil (standard:MMXIVd.pid)</translation>
+        <source>Specify pid file (default: Maieuticoind.pid)</source>
+        <translation>Ange pid fil (standard:Maieuticoind.pid)</translation>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="11"/>
@@ -1843,7 +1843,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../bitcoinstrings.cpp" line="47"/>
         <source>
-SSL options: (see the MMXIV Wiki for SSL setup instructions)</source>
+SSL options: (see the Maieuticoin Wiki for SSL setup instructions)</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1873,7 +1873,7 @@ SSL options: (see the MMXIV Wiki for SSL setup instructions)</source>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="57"/>
-        <source>Cannot obtain a lock on data directory %s.  MMXIV is probably already running.</source>
+        <source>Cannot obtain a lock on data directory %s.  Maieuticoin is probably already running.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1898,12 +1898,12 @@ SSL options: (see the MMXIV Wiki for SSL setup instructions)</source>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="66"/>
-        <source>Error loading wallet.dat: Wallet requires newer version of MMXIV</source>
-        <translation>Fel vid inläsningen av wallet.dat: Kontofilen kräver en senare version av MMXIV</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of Maieuticoin</source>
+        <translation>Fel vid inläsningen av wallet.dat: Kontofilen kräver en senare version av Maieuticoin</translation>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="67"/>
-        <source>Wallet needed to be rewritten: restart MMXIV to complete</source>
+        <source>Wallet needed to be rewritten: restart Maieuticoin to complete</source>
         <translation>Kontot behöver sparas om: Starta om Programmet</translation>
     </message>
     <message>
@@ -1958,12 +1958,12 @@ SSL options: (see the MMXIV Wiki for SSL setup instructions)</source>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="78"/>
-        <source>Unable to bind to port %d on this computer.  MMXIV is probably already running.</source>
+        <source>Unable to bind to port %d on this computer.  Maieuticoin is probably already running.</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../bitcoinstrings.cpp" line="81"/>
-        <source>Warning: Please check that your computer&apos;s date and time are correct.  If your clock is wrong MMXIV will not work properly.</source>
+        <source>Warning: Please check that your computer&apos;s date and time are correct.  If your clock is wrong Maieuticoin will not work properly.</source>
         <translation type="unfinished"/>
     </message>
     <message>

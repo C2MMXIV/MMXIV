@@ -52,10 +52,10 @@
 #     mkdir miniupnpc
 #     cp *.h miniupnpc/
 #
-# - Build ppcoind.exe
+# - Build maieuticoind.exe
 #   in MinGW MSYS
-#     cd ppcoin/src
-#     make ppcoind.exe -f makefile.mingw USE_UPNP=1
+#     cd maieuticoin/src
+#     make maieuticoind.exe -f makefile.mingw USE_UPNP=1
 #
 #
 
@@ -72,19 +72,17 @@ LIBPATHS= \
  -L"C:\openssl-1.0.1g-mgw"
 
 LIBS= \
- -l boost_system-mgw46-mt-s-1_47 \
- -l boost_filesystem-mgw46-mt-s-1_47 \
- -l boost_program_options-mgw46-mt-s-1_47 \
- -l boost_thread-mgw46-mt-s-1_47 \
+ -l boost_system-mgw48-mt-s-1_55 \
+ -l boost_filesystem-mgw48-mt-s-1_55 \
+ -l boost_program_options-mgw48-mt-s-1_55 \
+ -l boost_thread-mgw48-mt-s-1_55 \
  -l db_cxx \
  -l ssl \
  -l crypto
 
-DEFS=-DWIN32 -D_WINDOWS -DBOOST_THREAD_USE_LIB -DBOOST_SPIRIT_THREADSAFE
+DEFS=-DWIN32 -D_WINDOWS -DBOOST_THREAD_USE_LIB -DBOOST_SPIRIT_THREADSAFE -DUSE_IPV6 -D_FORTIFY_SOURCE=2
 DEBUGFLAGS=-g
-CFLAGS=-mthreads -O2 -w -Wno-invalid-offsetof -Wformat $(DEBUGFLAGS) $(DEFS) $(INCLUDEPATHS)
-
-TESTDEFS = -DTEST_DATA_DIR=$(abspath test/data)
+CFLAGS=-mthreads -O2 -w -Wall -Wextra -Wformat -Wformat-security -Wno-unused-parameter -Wno-invalid-offsetof -Wformat -Wl,--dynamicbase -Wl,--nxcompat -Wl,--large-address-aware -static-libgcc -static-libstdc++ $(DEBUGFLAGS) $(DEFS) $(INCLUDEPATHS)
 
 ifdef USE_UPNP
  INCLUDEPATHS += -I"C:\miniupnpc-1.6-mgw"
@@ -122,12 +120,12 @@ OBJS= \
     obj/kernel.o
 
 
-all: ppcoind.exe
+all: maieuticoind.exe
 
 obj/%.o: %.cpp $(HEADERS)
 	g++ -c $(CFLAGS) -o $@ $<
 
-ppcoind.exe: $(OBJS:obj/%=obj/%)
+maieuticoind.exe: $(OBJS:obj/%=obj/%)
 	g++ $(CFLAGS) -o $@ $(LIBPATHS) $^ $(LIBS)
 
 TESTOBJS := $(patsubst test/%.cpp,obj-test/%.o,$(wildcard test/*.cpp))
@@ -139,7 +137,7 @@ test_bitcoin.exe: $(TESTOBJS) $(filter-out obj/init.o,$(OBJS:obj/%=obj/%))
 	g++ $(CFLAGS) -o $@ $(LIBPATHS) $^ -lboost_unit_test_framework $(LIBS)
 
 clean:
-	-del /Q ppcoind test_bitcoin
+	-del /Q maieuticoind.exe test_bitcoin
 	-del /Q obj\*
 	-del /Q obj-test\*
 	-del /Q build.h

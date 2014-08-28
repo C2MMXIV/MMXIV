@@ -102,7 +102,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>MMXIV</string>
+               <string>Maieuticoin</string>
               </property>
               <property name="buddy">
                <cstring>lnReqAmount</cstring>

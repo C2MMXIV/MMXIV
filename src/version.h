@@ -1,5 +1,5 @@
 // Copyright (c) 2012 The Bitcoin developers
-// Copyright (c) 2012-2013 The MMXIV developers
+// Copyright (c) 2012-2013 The Maieuticoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #ifndef BITCOIN_VERSION_H
@@ -27,7 +27,7 @@ extern const std::string CLIENT_NAME;
 extern const std::string CLIENT_BUILD;
 extern const std::string CLIENT_DATE;
 
-// MMXIV version - intended for display purpose ONLY
+// Maieuticoin version - intended for display purpose ONLY
 #define PPCOIN_VERSION_MAJOR       1
 #define PPCOIN_VERSION_MINOR       0
 #define PPCOIN_VERSION_REVISION    2

@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
-// Copyright (c) 2011-2013 The MMXIV developers
+// Copyright (c) 2011-2013 The Maieuticoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -250,7 +250,7 @@ bool GetMyExternalIP(CNetAddr& ipRet)
 
 void ThreadGetMyExternalIP(void* parg)
 {
-    // Wait for IRC to get it first - disabled with MMXIV
+    // Wait for IRC to get it first - disabled with Maieuticoin
     if (false && GetBoolArg("-irc", false))
     {
         for (int i = 0; i < 2 * 60; i++)
@@ -904,7 +904,7 @@ void ThreadMapPort2(void* parg)
             }
         }
 
-        string strDesc = "MMXIV " + FormatFullVersion();
+        string strDesc = "Maieuticoin " + FormatFullVersion();
 #ifndef UPNPDISCOVER_SUCCESS
         /* miniupnpc 1.5 */
         r = UPNP_AddPortMapping(urls.controlURL, data.first.servicetype,
@@ -995,7 +995,7 @@ void MapPort(bool /* unused fMapPort */)
 // Each pair gives a source name and a seed name.
 // The first name is used as information source for addrman.
 // The second name should resolve to a list of seed addresses.
-// testnet dns seed begins with 't', all else are MMXIV dns seeds.
+// testnet dns seed begins with 't', all else are Maieuticoin dns seeds.
 static const char *strDNSSeed[][2] = {
     {"seed", "dnsseed.mmxivcoin.com"},
 };
@@ -1427,7 +1427,7 @@ void ThreadMessageHandler2(void* parg)
     }
 }
 
-// MMXIV: stake minter thread
+// Maieuticoin: stake minter thread
 void static ThreadStakeMinter(void* parg)
 {
     printf("ThreadStakeMinter started\n");
@@ -1514,7 +1514,7 @@ bool BindListenPort(string& strError)
     {
         int nErr = WSAGetLastError();
         if (nErr == WSAEADDRINUSE)
-            strError = strprintf(_("Unable to bind to port %d on this computer.  MMXIV is probably already running."), ntohs(sockaddr.sin_port));
+            strError = strprintf(_("Unable to bind to port %d on this computer.  Maieuticoin is probably already running."), ntohs(sockaddr.sin_port));
         else
             strError = strprintf("Error: Unable to bind to port %d on this computer (bind returned error %d)", ntohs(sockaddr.sin_port), nErr);
         printf("%s\n", strError.c_str());
@@ -1636,7 +1636,7 @@ void StartNode(void* parg)
     // Get addresses from IRC and advertise ours
     // if (!CreateThread(ThreadIRCSeed, NULL))
     //     printf("Error: CreateThread(ThreadIRCSeed) failed\n");
-    // IRC disabled with MMXIV
+    // IRC disabled with Maieuticoin
     printf("IRC seeding/communication disabled\n");
 
     // Send and receive from sockets, accept connections
@@ -1662,7 +1662,7 @@ void StartNode(void* parg)
     // Generate coins in the background
     GenerateBitcoins(GetBoolArg("-gen", false), pwalletMain);
 
-    // MMXIV: mint proof-of-stake blocks in the background
+    // Maieuticoin: mint proof-of-stake blocks in the background
     if (GetBoolArg("-staking", true))
         if (!CreateThread(ThreadStakeMinter, pwalletMain))
             printf("Error: CreateThread(ThreadStakeMinter) failed\n");

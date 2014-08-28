@@ -1,6 +1,6 @@
 // Copyright (c) 2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
-// Copyright (c) 2011-2013 The MMXIV developers
+// Copyright (c) 2011-2013 The Maieuticoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -246,10 +246,10 @@ Value stop(const Array& params, bool fHelp)
     if (fHelp || params.size() != 0)
         throw runtime_error(
             "stop\n"
-            "Stop MMXIV server.");
+            "Stop Maieuticoin server.");
     // Shutdown will take long enough that the response should get back
     StartShutdown();
-    return "MMXIV server stopping";
+    return "Maieuticoin server stopping";
 }
 
 
@@ -399,7 +399,7 @@ Value gethashespersec(const Array& params, bool fHelp)
 }
 
 
-// MMXIV: get network Gh/s estimate
+// Maieuticoin: get network Gh/s estimate
 Value getnetworkghps(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 0)
@@ -525,7 +525,7 @@ Value getnewaddress(const Array& params, bool fHelp)
     if (fHelp || params.size() > 1)
         throw runtime_error(
             "getnewaddress [account]\n"
-            "Returns a new MMXIV address for receiving payments.  "
+            "Returns a new Maieuticoin address for receiving payments.  "
             "If [account] is specified (recommended), it is added to the address book "
             "so payments received with the address will be credited to [account].");
 
@@ -592,7 +592,7 @@ Value getaccountaddress(const Array& params, bool fHelp)
     if (fHelp || params.size() != 1)
         throw runtime_error(
             "getaccountaddress <account>\n"
-            "Returns the current MMXIV address for receiving payments to this account.");
+            "Returns the current Maieuticoin address for receiving payments to this account.");
 
     // Parse the account first so we don't generate a key if there's an error
     string strAccount = AccountFromValue(params[0]);
@@ -610,12 +610,12 @@ Value setaccount(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() < 1 || params.size() > 2)
         throw runtime_error(
-            "setaccount <MMXIVaddress> <account>\n"
+            "setaccount <Maieuticoinaddress> <account>\n"
             "Sets the account associated with the given address.");
 
     CBitcoinAddress address(params[0].get_str());
     if (!address.IsValid())
-        throw JSONRPCError(-5, "Invalid MMXIV address");
+        throw JSONRPCError(-5, "Invalid Maieuticoin address");
 
 
     string strAccount;
@@ -640,12 +640,12 @@ Value getaccount(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 1)
         throw runtime_error(
-            "getaccount <MMXIVaddress>\n"
+            "getaccount <Maieuticoinaddress>\n"
             "Returns the account associated with the given address.");
 
     CBitcoinAddress address(params[0].get_str());
     if (!address.IsValid())
-        throw JSONRPCError(-5, "Invalid MMXIV address");
+        throw JSONRPCError(-5, "Invalid Maieuticoin address");
 
     string strAccount;
     map<CBitcoinAddress, string>::iterator mi = pwalletMain->mapAddressBook.find(address);
@@ -693,17 +693,17 @@ Value sendtoaddress(const Array& params, bool fHelp)
 {
     if (pwalletMain->IsCrypted() && (fHelp || params.size() < 2 || params.size() > 4))
         throw runtime_error(
-            "sendtoaddress <MMXIVaddress> <amount> [comment] [comment-to]\n"
+            "sendtoaddress <Maieuticoinaddress> <amount> [comment] [comment-to]\n"
             "<amount> is a real and is rounded to the nearest 0.000001\n"
             "requires wallet passphrase to be set with walletpassphrase first");
     if (!pwalletMain->IsCrypted() && (fHelp || params.size() < 2 || params.size() > 4))
         throw runtime_error(
-            "sendtoaddress <MMXIVaddress> <amount> [comment] [comment-to]\n"
+            "sendtoaddress <Maieuticoinaddress> <amount> [comment] [comment-to]\n"
             "<amount> is a real and is rounded to the nearest 0.000001");
 
     CBitcoinAddress address(params[0].get_str());
     if (!address.IsValid())
-        throw JSONRPCError(-5, "Invalid MMXIV address");
+        throw JSONRPCError(-5, "Invalid Maieuticoin address");
 
     // Amount
     int64 nAmount = AmountFromValue(params[1]);
@@ -731,7 +731,7 @@ Value signmessage(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 2)
         throw runtime_error(
-            "signmessage <MMXIVaddress> <message>\n"
+            "signmessage <Maieuticoinaddress> <message>\n"
             "Sign a message with the private key of an address");
 
     if (pwalletMain->IsLocked())
@@ -763,7 +763,7 @@ Value verifymessage(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 3)
         throw runtime_error(
-            "verifymessage <MMXIVaddress> <signature> <message>\n"
+            "verifymessage <Maieuticoinaddress> <signature> <message>\n"
             "Verify a signed message");
 
     string strAddress  = params[0].get_str();
@@ -796,14 +796,14 @@ Value getreceivedbyaddress(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() < 1 || params.size() > 2)
         throw runtime_error(
-            "getreceivedbyaddress <MMXIVaddress> [minconf=1]\n"
-            "Returns the total amount received by <MMXIVaddress> in transactions with at least [minconf] confirmations.");
+            "getreceivedbyaddress <Maieuticoinaddress> [minconf=1]\n"
+            "Returns the total amount received by <Maieuticoinaddress> in transactions with at least [minconf] confirmations.");
 
     // Bitcoin address
     CBitcoinAddress address = CBitcoinAddress(params[0].get_str());
     CScript scriptPubKey;
     if (!address.IsValid())
-        throw JSONRPCError(-5, "Invalid MMXIV address");
+        throw JSONRPCError(-5, "Invalid Maieuticoin address");
     scriptPubKey.SetBitcoinAddress(address);
     if (!IsMine(*pwalletMain,scriptPubKey))
         return (double)0.0;
@@ -1018,18 +1018,18 @@ Value sendfrom(const Array& params, bool fHelp)
 {
     if (pwalletMain->IsCrypted() && (fHelp || params.size() < 3 || params.size() > 6))
         throw runtime_error(
-            "sendfrom <fromaccount> <toMMXIVaddress> <amount> [minconf=1] [comment] [comment-to]\n"
+            "sendfrom <fromaccount> <toMaieuticoinaddress> <amount> [minconf=1] [comment] [comment-to]\n"
             "<amount> is a real and is rounded to the nearest 0.000001\n"
             "requires wallet passphrase to be set with walletpassphrase first");
     if (!pwalletMain->IsCrypted() && (fHelp || params.size() < 3 || params.size() > 6))
         throw runtime_error(
-            "sendfrom <fromaccount> <toMMXIVaddress> <amount> [minconf=1] [comment] [comment-to]\n"
+            "sendfrom <fromaccount> <toMaieuticoinaddress> <amount> [minconf=1] [comment] [comment-to]\n"
             "<amount> is a real and is rounded to the nearest 0.000001");
 
     string strAccount = AccountFromValue(params[0]);
     CBitcoinAddress address(params[1].get_str());
     if (!address.IsValid())
-        throw JSONRPCError(-5, "Invalid MMXIV address");
+        throw JSONRPCError(-5, "Invalid Maieuticoin address");
     int64 nAmount = AmountFromValue(params[2]);
     if (nAmount < MIN_TXOUT_AMOUNT)
         throw JSONRPCError(-101, "Send amount too small");
@@ -1092,7 +1092,7 @@ Value sendmany(const Array& params, bool fHelp)
     {
         CBitcoinAddress address(s.name_);
         if (!address.IsValid())
-            throw JSONRPCError(-5, string("Invalid MMXIV address:")+s.name_);
+            throw JSONRPCError(-5, string("Invalid Maieuticoin address:")+s.name_);
 
         if (setAddress.count(address))
             throw JSONRPCError(-8, string("Invalid parameter, duplicated address: ")+s.name_);
@@ -1776,7 +1776,7 @@ Value walletpassphrase(const Array& params, bool fHelp)
     int64* pnSleepTime = new int64(params[1].get_int64());
     CreateThread(ThreadCleanWalletPassphrase, pnSleepTime);
 
-    // MMXIV: if user OS account compromised prevent trivial sendmoney commands
+    // Maieuticoin: if user OS account compromised prevent trivial sendmoney commands
     if (params.size() > 2)
         fWalletUnlockMintOnly = params[2].get_bool();
     else
@@ -1871,7 +1871,7 @@ Value encryptwallet(const Array& params, bool fHelp)
     // slack space in .dat files; that is bad if the old data is
     // unencrypted private keys.  So:
     StartShutdown();
-    return "wallet encrypted; MMXIV server stopping, restart to run with encrypted wallet";
+    return "wallet encrypted; Maieuticoin server stopping, restart to run with encrypted wallet";
 }
 
 
@@ -1879,8 +1879,8 @@ Value validateaddress(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 1)
         throw runtime_error(
-            "validateaddress <MMXIVaddress>\n"
-            "Return information about <MMXIVaddress>.");
+            "validateaddress <Maieuticoinaddress>\n"
+            "Return information about <Maieuticoinaddress>.");
 
     CBitcoinAddress address(params[0].get_str());
     bool isValid = address.IsValid();
@@ -1942,13 +1942,13 @@ Value getwork(const Array& params, bool fHelp)
             "If [data] is specified, tries to solve the block and returns true if it was successful.");
 
     if (vNodes.empty())
-        throw JSONRPCError(-9, "MMXIV is not connected!");
+        throw JSONRPCError(-9, "Maieuticoin is not connected!");
 
     if (IsInitialBlockDownload())
-        throw JSONRPCError(-10, "MMXIV is downloading blocks...");
+        throw JSONRPCError(-10, "Maieuticoin is downloading blocks...");
         
     if (pindexBest != NULL && pindexBest->nHeight >= LAST_POW_BLOCK)
-        throw JSONRPCError(-10, "MMXIV is now pure PoS");
+        throw JSONRPCError(-10, "Maieuticoin is now pure PoS");
 
     typedef map<uint256, pair<CBlock*, CScript> > mapNewBlock_t;
     static mapNewBlock_t mapNewBlock;
@@ -2078,13 +2078,13 @@ Value getblocktemplate(const Array& params, bool fHelp)
 
     {
         if (vNodes.empty())
-            throw JSONRPCError(-9, "MMXIV is not connected!");
+            throw JSONRPCError(-9, "Maieuticoin is not connected!");
 
         if (IsInitialBlockDownload())
-            throw JSONRPCError(-10, "MMXIV is downloading blocks...");
+            throw JSONRPCError(-10, "Maieuticoin is downloading blocks...");
 
         if (pindexBest != NULL && pindexBest->nHeight >= LAST_POW_BLOCK)
-            throw JSONRPCError(-10, "MMXIV is now pure PoS");
+            throw JSONRPCError(-10, "Maieuticoin is now pure PoS");
 
         // Update block
         static unsigned int nTransactionsUpdatedLast;
@@ -2215,7 +2215,7 @@ Value submitblock(const Array& params, bool fHelp)
         throw JSONRPCError(-22, "Block decode failed");
     }
 
-    // MMXIV: sign block
+    // Maieuticoin: sign block
     if (!block.SignBlock(*pwalletMain))
         throw JSONRPCError(-100, "Unable to sign block, wallet locked?");
 
@@ -2267,7 +2267,7 @@ Value getblock(const Array& params, bool fHelp)
 }
 
 
-// MMXIV: get information of sync-checkpoint
+// Maieuticoin: get information of sync-checkpoint
 Value getcheckpoint(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 0)
@@ -2289,7 +2289,7 @@ Value getcheckpoint(const Array& params, bool fHelp)
 }
 
 
-// MMXIV: reserve balance from being staked for network protection
+// Maieuticoin: reserve balance from being staked for network protection
 Value reservebalance(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() > 2)
@@ -2331,7 +2331,7 @@ Value reservebalance(const Array& params, bool fHelp)
 }
 
 
-// MMXIV: check wallet integrity
+// Maieuticoin: check wallet integrity
 Value checkwallet(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() > 0)
@@ -2354,7 +2354,7 @@ Value checkwallet(const Array& params, bool fHelp)
 }
 
 
-// MMXIV: repair wallet
+// Maieuticoin: repair wallet
 Value repairwallet(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() > 0)
@@ -2376,7 +2376,7 @@ Value repairwallet(const Array& params, bool fHelp)
     return result;
 }
 
-// MMXIV: make a public-private key pair
+// Maieuticoin: make a public-private key pair
 Value makekeypair(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() > 1)
@@ -2410,7 +2410,7 @@ Value makekeypair(const Array& params, bool fHelp)
 extern CCriticalSection cs_mapAlerts;
 extern map<uint256, CAlert> mapAlerts;
 
-// MMXIV: send alert.  
+// Maieuticoin: send alert.  
 // There is a known deadlock situation with ThreadMessageHandler
 // ThreadMessageHandler: holds cs_vSend and acquiring cs_main in SendMessages()
 // ThreadRPCServer: holds cs_main and acquiring cs_vSend in alert.RelayTo()/PushMessage()/BeginMessage()
@@ -2571,7 +2571,7 @@ string HTTPPost(const string& strMsg, const map<string,string>& mapRequestHeader
 {
     ostringstream s;
     s << "POST / HTTP/1.1\r\n"
-      << "User-Agent: MMXIV-json-rpc/" << FormatFullVersion() << "\r\n"
+      << "User-Agent: Maieuticoin-json-rpc/" << FormatFullVersion() << "\r\n"
       << "Host: 127.0.0.1\r\n"
       << "Content-Type: application/json\r\n"
       << "Content-Length: " << strMsg.size() << "\r\n"
@@ -2602,7 +2602,7 @@ static string HTTPReply(int nStatus, const string& strMsg)
     if (nStatus == 401)
         return strprintf("HTTP/1.0 401 Authorization Required\r\n"
             "Date: %s\r\n"
-            "Server: MMXIV-json-rpc/%s\r\n"
+            "Server: Maieuticoin-json-rpc/%s\r\n"
             "WWW-Authenticate: Basic realm=\"jsonrpc\"\r\n"
             "Content-Type: text/html\r\n"
             "Content-Length: 296\r\n"
@@ -2629,7 +2629,7 @@ static string HTTPReply(int nStatus, const string& strMsg)
             "Connection: close\r\n"
             "Content-Length: %d\r\n"
             "Content-Type: application/json\r\n"
-            "Server: MMXIV-json-rpc/%s\r\n"
+            "Server: Maieuticoin-json-rpc/%s\r\n"
             "\r\n"
             "%s",
         nStatus,
@@ -2850,7 +2850,7 @@ void ThreadRPCServer2(void* parg)
     {
         unsigned char rand_pwd[32];
         RAND_bytes(rand_pwd, 32);
-        string strWhatAmI = "To use MMXIVd";
+        string strWhatAmI = "To use Maieuticoind";
         if (mapArgs.count("-server"))
             strWhatAmI = strprintf(_("To use the %s option"), "\"-server\"");
         else if (mapArgs.count("-daemon"))

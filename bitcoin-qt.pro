@@ -1,5 +1,5 @@
 TEMPLATE = app
-TARGET = MMXIV-Qt
+TARGET = Maieuticoin-Qt
 VERSION = 0.6.3.0
 INCLUDEPATH += src src/json src/qt
 QT += core gui network

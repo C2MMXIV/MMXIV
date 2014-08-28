@@ -1,5 +1,5 @@
 // Copyright (c) 2009-2012 The Bitcoin developers
-// Copyright (c) 2011-2013 The MMXIV developers
+// Copyright (c) 2011-2013 The Maieuticoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -32,6 +32,7 @@ namespace Checkpoints
         (  5000, uint256( "0x0000000001912412e532194fc867bbe3266a406c523c3a0606d1e15db05b4976" ))
         ( 10000, uint256( "0x00000000038771d6bf0a9f44c06ef5dc6f539e33d9aabdeb62f6c2387db8ba8c" ))
         ( 13500, uint256( "0x00000000020b7e27e7221e4016a4e444cc910e9e67b4c20fe719a9758e548668" ))
+        ( 15000, uint256( "0xe67205f1e8796f109957c7224edf8eba5260a343ef8223267dbb0400a446956e" ))
         ;
 
     bool CheckHardened(int nHeight, const uint256& hash)
@@ -69,7 +70,7 @@ namespace Checkpoints
         return NULL;
     }
 
-    // MMXIV: synchronized checkpoint (centrally broadcasted)
+    // Maieuticoin: synchronized checkpoint (centrally broadcasted)
     uint256 hashSyncCheckpoint = 0;
     uint256 hashPendingCheckpoint = 0;
     CSyncCheckpoint checkpointMessage;
@@ -77,7 +78,7 @@ namespace Checkpoints
     uint256 hashInvalidCheckpoint = 0;
     CCriticalSection cs_hashSyncCheckpoint;
 
-    // MMXIV: get last synchronized checkpoint
+    // Maieuticoin: get last synchronized checkpoint
     CBlockIndex* GetLastSyncCheckpoint()
     {
         LOCK(cs_hashSyncCheckpoint);
@@ -88,7 +89,7 @@ namespace Checkpoints
         return NULL;
     }
 
-    // MMXIV: only descendant of current sync-checkpoint is allowed
+    // Maieuticoin: only descendant of current sync-checkpoint is allowed
     bool ValidateSyncCheckpoint(uint256 hashCheckpoint)
     {
         if (!mapBlockIndex.count(hashSyncCheckpoint))
@@ -247,7 +248,7 @@ namespace Checkpoints
         return false;
     }
 
-    // MMXIV: reset synchronized checkpoint to last hardened checkpoint
+    // Maieuticoin: reset synchronized checkpoint to last hardened checkpoint
     bool ResetSyncCheckpoint()
     {
         LOCK(cs_hashSyncCheckpoint);
@@ -369,12 +370,12 @@ namespace Checkpoints
     }
 }
 
-// MMXIV: sync-checkpoint master key
+// Maieuticoin: sync-checkpoint master key
 const std::string CSyncCheckpoint::strMasterPubKey = "04a7ddf1c66698ca9b6856a62c376482dbe3a22b5c97637c506a636821b95b62e83eb2c2fb0e93f6a7fc80ba3cec24c3112e70cc2108cff261afd513878ac81032";
 
 std::string CSyncCheckpoint::strMasterPrivKey = "";
 
-// MMXIV: verify signature of sync-checkpoint message
+// Maieuticoin: verify signature of sync-checkpoint message
 bool CSyncCheckpoint::CheckSignature()
 {
     CKey key;
@@ -389,7 +390,7 @@ bool CSyncCheckpoint::CheckSignature()
     return true;
 }
 
-// MMXIV: process synchronized checkpoint
+// Maieuticoin: process synchronized checkpoint
 bool CSyncCheckpoint::ProcessSyncCheckpoint(CNode* pfrom)
 {
     if (!CheckSignature())

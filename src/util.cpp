@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
-// Copyright (c) 2011-2012 The MMXIV developers
+// Copyright (c) 2011-2012 The Maieuticoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -777,7 +777,7 @@ void FormatException(char* pszMessage, std::exception* pex, const char* pszThrea
     pszModule[0] = '\0';
     GetModuleFileNameA(NULL, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "MMXIV";
+    const char* pszModule = "Maieuticoin";
 #endif
     if (pex)
         snprintf(pszMessage, 1000,
@@ -852,9 +852,9 @@ boost::filesystem::path GetDefaultDataDir()
 {
     namespace fs = boost::filesystem;
 
-    // Windows: C:\Documents and Settings\username\Application Data\MMXIV2
+    // Windows: C:\Documents and Settings\username\Application Data\Maieuticoin2
     // Mac: ~/Library/Application Support/MMXIV2
-    // Unix: ~/.MMXIV2
+    // Unix: ~/.MMXIV22
 #ifdef WIN32
     // Windows
     return MyGetSpecialFolderPath(CSIDL_APPDATA, true) / "MMXIV2";
@@ -915,9 +915,14 @@ const boost::filesystem::path &GetDataDir(bool fNetSpecific)
 boost::filesystem::path GetConfigFile()
 {
     namespace fs = boost::filesystem;
+    boost::system::error_code ec;
 
     fs::path pathConfigFile(GetArg("-conf", "mmxiv.conf"));
     if (!pathConfigFile.is_complete()) pathConfigFile = GetDataDir(false) / pathConfigFile;
+    if (!fs::exists(pathConfigFile, ec))
+    {
+        pathConfigFile = GetDataDir(false) / "maieuticoin.conf";
+    }
     return pathConfigFile;
 }
 
@@ -952,7 +957,7 @@ boost::filesystem::path GetPidFile()
 {
     namespace fs = boost::filesystem;
 
-    fs::path pathPidFile(GetArg("-pid", "MMXIVd.pid"));
+    fs::path pathPidFile(GetArg("-pid", "Maieuticoind.pid"));
     if (!pathPidFile.is_complete()) pathPidFile = GetDataDir() / pathPidFile;
     return pathPidFile;
 }
@@ -1071,10 +1076,10 @@ void AddTimeData(const CNetAddr& ip, int64 nTime)
                 if (!fMatch)
                 {
                     fDone = true;
-                    string strMessage = _("Warning: Please check that your computer's date and time are correct.  If your clock is wrong MMXIV will not work properly.");
+                    string strMessage = _("Warning: Please check that your computer's date and time are correct.  If your clock is wrong Maieuticoin will not work properly.");
                     strMiscWarning = strMessage;
                     printf("*** %s\n", strMessage.c_str());
-                    ThreadSafeMessageBox(strMessage+" ", string("MMXIV"), wxOK | wxICON_EXCLAMATION);
+                    ThreadSafeMessageBox(strMessage+" ", string("Maieuticoin"), wxOK | wxICON_EXCLAMATION);
                 }
             }
         }
@@ -1116,7 +1121,7 @@ std::string FormatSubVersion(const std::string& name, int nClientVersion, const 
     if (!comments.empty())
         ss << "(" << boost::algorithm::join(comments, "; ") << ")";
     ss << "/";
-    ss << "MMXIV:" << FormatVersion(PPCOIN_VERSION);
+    ss << "Maieuticoin:" << FormatVersion(PPCOIN_VERSION);
     ss << "(" << CLIENT_BUILD << ")/";
     return ss.str();
 }
@@ -1124,7 +1129,7 @@ std::string FormatSubVersion(const std::string& name, int nClientVersion, const 
 #ifdef WIN32
 boost::filesystem::path static StartupShortcutPath()
 {
-    return MyGetSpecialFolderPath(CSIDL_STARTUP, true) / "MMXIV.lnk";
+    return MyGetSpecialFolderPath(CSIDL_STARTUP, true) / "Maieuticoin.lnk";
 }
 
 bool GetStartOnSystemStartup()
@@ -1205,7 +1210,7 @@ boost::filesystem::path static GetAutostartDir()
 
 boost::filesystem::path static GetAutostartFilePath()
 {
-    return GetAutostartDir() / "MMXIV.desktop";
+    return GetAutostartDir() / "Maieuticoin.desktop";
 }
 
 bool GetStartOnSystemStartup()
@@ -1246,7 +1251,7 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         // Write a bitcoin.desktop file to the autostart directory:
         optionFile << "[Desktop Entry]\n";
         optionFile << "Type=Application\n";
-        optionFile << "Name=MMXIV\n";
+        optionFile << "Name=Maieuticoin\n";
         optionFile << "Exec=" << pszExePath << " -min\n";
         optionFile << "Terminal=false\n";
         optionFile << "Hidden=false\n";
