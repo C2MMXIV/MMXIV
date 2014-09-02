@@ -2257,7 +2257,7 @@ bool LoadBlockIndex(bool fAllowNew)
         //   vMerkleTree: 4a5e1e
 
         // Genesis block
-        const char* pszTimestamp = "Maieuticoin PoS Launch - 01-AUG-2014 - JTn1";
+        const char* pszTimestamp = "MMXIV PoS Launch - 01-AUG-2014 - JTn1";
         CTransaction txNew;
         txNew.nTime = 1406851200;
         txNew.vin.resize(1);
