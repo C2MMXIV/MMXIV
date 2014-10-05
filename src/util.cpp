@@ -187,10 +187,12 @@ uint256 GetRandHash()
     return hash;
 }
 
-
-
-
-
+void runCommand(std::string strCommand)
+{
+    int nErr = ::system(strCommand.c_str());
+    if (nErr)
+        printf("runCommand error: system(%s) returned %d\n", strCommand.c_str(), nErr);
+}
 
 
 
