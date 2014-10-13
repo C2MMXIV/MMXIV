@@ -12,7 +12,7 @@ out collectively by the network. Maieuticoin is also the name of the open source
 software which enables the use of this currency.
 
 For more information, as well as an immediately useable, binary version of
-the Maieuticoin client software, see http://www.Maieuticoincoin.com.
+the Maieuticoin client software, see http://www.mmxivcoin.com.
 
 Specifics
 ---------
