@@ -11,23 +11,6 @@
 # include <arpa/inet.h>
 #endif
 
-// The message start string is designed to be unlikely to occur in normal data.
-// The characters are rarely used upper ascii, not valid as UTF-8, and produce
-// a large 4-byte int at any alignment.
-
-// Maieuticoin message start
-static unsigned char pchMessageStartMain[4] = { 0x4d, 0x20, 0x14, 0x44 };
-// Public testnet message start
-static unsigned char pchMessageStartTest[4] = { 0x4d, 0x54, 0x54, 0x44 };
-
-void GetMessageStart(unsigned char pchMessageStart[], bool fPersistent)
-{
-    if (fTestNet)
-        memcpy(pchMessageStart, pchMessageStartTest, sizeof(pchMessageStartTest));
-    else
-        memcpy(pchMessageStart, pchMessageStartMain, sizeof(pchMessageStartMain));
-}
-
 static const char* ppszTypeName[] =
 {
     "ERROR",
@@ -37,7 +20,7 @@ static const char* ppszTypeName[] =
 
 CMessageHeader::CMessageHeader()
 {
-    GetMessageStart(pchMessageStart);
+    memcpy(pchMessageStart, ::pchMessageStart, sizeof(pchMessageStart));
     memset(pchCommand, 0, sizeof(pchCommand));
     pchCommand[1] = 1;
     nMessageSize = -1;
@@ -46,7 +29,7 @@ CMessageHeader::CMessageHeader()
 
 CMessageHeader::CMessageHeader(const char* pszCommand, unsigned int nMessageSizeIn)
 {
-    GetMessageStart(pchMessageStart);
+    memcpy(pchMessageStart, ::pchMessageStart, sizeof(pchMessageStart));
     strncpy(pchCommand, pszCommand, COMMAND_SIZE);
     nMessageSize = nMessageSizeIn;
     nChecksum = 0;
@@ -63,9 +46,7 @@ std::string CMessageHeader::GetCommand() const
 bool CMessageHeader::IsValid() const
 {
     // Check start string
-    unsigned char pchMessageStartProtocol[4];
-    GetMessageStart(pchMessageStartProtocol);
-    if (memcmp(pchMessageStart, pchMessageStartProtocol, sizeof(pchMessageStart)) != 0)
+    if (memcmp(pchMessageStart, ::pchMessageStart, sizeof(pchMessageStart)) != 0)
         return false;
 
     // Check the command string for errors
@@ -99,7 +80,7 @@ CAddress::CAddress() : CService()
     Init();
 }
 
-CAddress::CAddress(CService ipIn, uint64 nServicesIn) : CService(ipIn)
+CAddress::CAddress(CService ipIn, uint64_t nServicesIn) : CService(ipIn)
 {
     Init();
     nServices = nServicesIn;

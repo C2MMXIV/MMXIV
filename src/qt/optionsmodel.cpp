@@ -4,10 +4,7 @@
 
 #include "init.h"
 #include "walletdb.h"
-
-#if QT_VERSION >= 0x050000
-#define toAscii toLatin1
-#endif
+#include "guiutil.h"
 
 OptionsModel::OptionsModel(QObject *parent) :
     QAbstractListModel(parent)
@@ -15,85 +12,54 @@ OptionsModel::OptionsModel(QObject *parent) :
     Init();
 }
 
+bool static ApplyProxySettings()
+{
+    QSettings settings;
+    CService addrProxy(settings.value("addrProxy", "127.0.0.1:9050").toString().toStdString());
+    int nSocksVersion(settings.value("nSocksVersion", 5).toInt());
+    if (!settings.value("fUseProxy", false).toBool()) {
+        addrProxy = CService();
+        nSocksVersion = 0;
+        return false;
+    }
+    if (nSocksVersion && !addrProxy.IsValid())
+        return false;
+    if (!IsLimited(NET_IPV4))
+        SetProxy(NET_IPV4, addrProxy, nSocksVersion);
+    if (nSocksVersion > 4) {
+        if (!IsLimited(NET_IPV6))
+            SetProxy(NET_IPV6, addrProxy, nSocksVersion);
+        SetNameProxy(addrProxy, nSocksVersion);
+    }
+    return true;
+}
+
 void OptionsModel::Init()
 {
     QSettings settings;
 
-    // These are QT-only settings:
+    // These are Qt-only settings:
     nDisplayUnit = settings.value("nDisplayUnit", BitcoinUnits::BTC).toInt();
-    bDisplayAddresses = settings.value("bDisplayAddresses", false).toBool();
     fMinimizeToTray = settings.value("fMinimizeToTray", false).toBool();
     fMinimizeOnClose = settings.value("fMinimizeOnClose", false).toBool();
+    fCoinControlFeatures = settings.value("fCoinControlFeatures", false).toBool();
     nTransactionFee = settings.value("nTransactionFee").toLongLong();
+    nReserveBalance = settings.value("nReserveBalance").toLongLong();
+    language = settings.value("language", "").toString();
 
-    // These are shared with core bitcoin; we want
+    // These are shared with core Bitcoin; we want
     // command-line options to override the GUI settings:
     if (settings.contains("fUseUPnP"))
         SoftSetBoolArg("-upnp", settings.value("fUseUPnP").toBool());
     if (settings.contains("addrProxy") && settings.value("fUseProxy").toBool())
         SoftSetArg("-proxy", settings.value("addrProxy").toString().toStdString());
-    if (settings.contains("detachDB"))
-        SoftSetBoolArg("-detachdb", settings.value("detachDB").toBool());
+    if (settings.contains("nSocksVersion") && settings.value("fUseProxy").toBool())
+        SoftSetArg("-socks", settings.value("nSocksVersion").toString().toStdString());
+    if (settings.contains("fMinimizeCoinAge"))
+        SoftSetBoolArg("-minimizecoinage", settings.value("fMinimizeCoinAge").toBool());
+    if (!language.isEmpty())
+        SoftSetArg("-lang", language.toStdString());
 }
-
-bool OptionsModel::Upgrade()
-{
-    QSettings settings;
-
-    if (settings.contains("bImportFinished"))
-        return false; // Already upgraded
-
-    settings.setValue("bImportFinished", true);
-
-    // Move settings from old wallet.dat (if any):
-    CWalletDB walletdb("wallet.dat");
-
-    QList<QString> intOptions;
-    intOptions << "nDisplayUnit" << "nTransactionFee";
-    foreach(QString key, intOptions)
-    {
-        int value = 0;
-        if (walletdb.ReadSetting(key.toStdString(), value))
-        {
-            settings.setValue(key, value);
-            walletdb.EraseSetting(key.toStdString());
-        }
-    }
-    QList<QString> boolOptions;
-    boolOptions << "bDisplayAddresses" << "fMinimizeToTray" << "fMinimizeOnClose" << "fUseProxy" << "fUseUPnP";
-    foreach(QString key, boolOptions)
-    {
-        bool value = false;
-        if (walletdb.ReadSetting(key.toStdString(), value))
-        {
-            settings.setValue(key, value);
-            walletdb.EraseSetting(key.toStdString());
-        }
-    }
-    try
-    {
-        CAddress addrProxyAddress;
-        if (walletdb.ReadSetting("addrProxy", addrProxyAddress))
-        {
-            addrProxy = addrProxyAddress;
-            settings.setValue("addrProxy", addrProxy.ToStringIPPort().c_str());
-            walletdb.EraseSetting("addrProxy");
-        }
-    }
-    catch (std::ios_base::failure &e)
-    {
-        // 0.6.0rc1 saved this as a CService, which causes failure when parsing as a CAddress
-        if (walletdb.ReadSetting("addrProxy", addrProxy))
-        {
-            settings.setValue("addrProxy", addrProxy.ToStringIPPort().c_str());
-            walletdb.EraseSetting("addrProxy");
-        }
-    }
-    Init();
-
-    return true;
-}
-
 
 int OptionsModel::rowCount(const QModelIndex & parent) const
 {
@@ -108,27 +74,43 @@ QVariant OptionsModel::data(const QModelIndex & index, int role) const
         switch(index.row())
         {
         case StartAtStartup:
-            return QVariant(GetStartOnSystemStartup());
+            return QVariant(GUIUtil::GetStartOnSystemStartup());
         case MinimizeToTray:
             return QVariant(fMinimizeToTray);
         case MapPortUPnP:
             return settings.value("fUseUPnP", GetBoolArg("-upnp", true));
         case MinimizeOnClose:
             return QVariant(fMinimizeOnClose);
-        case ConnectSOCKS4:
+        case ProxyUse:
             return settings.value("fUseProxy", false);
-        case ProxyIP:
-            return QVariant(QString::fromStdString(addrProxy.ToStringIP()));
-        case ProxyPort:
-            return QVariant(addrProxy.GetPort());
+        case ProxyIP: {
+            proxyType proxy;
+            if (GetProxy(NET_IPV4, proxy))
+                return QVariant(QString::fromStdString(proxy.first.ToStringIP()));
+            else
+                return QVariant(QString::fromStdString("127.0.0.1"));
+        }
+        case ProxyPort: {
+            proxyType proxy;
+            if (GetProxy(NET_IPV4, proxy))
+                return QVariant(proxy.first.GetPort());
+            else
+                return QVariant(9050);
+        }
+        case ProxySocksVersion:
+            return settings.value("nSocksVersion", 5);
         case Fee:
-            return QVariant(nTransactionFee);
+            return QVariant((qint64) nTransactionFee);
+        case ReserveBalance:
+            return QVariant((qint64) nReserveBalance);
         case DisplayUnit:
             return QVariant(nDisplayUnit);
-        case DisplayAddresses:
-            return QVariant(bDisplayAddresses);
-        case DetachDatabases:
-            return QVariant(fDetachDB);
+        case Language:
+            return settings.value("language", "");
+        case CoinControlFeatures:
+            return QVariant(fCoinControlFeatures);
+        case MinimizeCoinAge:
+            return settings.value("fMinimizeCoinAge", GetBoolArg("-minimizecoinage", false));
         default:
             return QVariant();
         }
@@ -145,78 +127,84 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
         switch(index.row())
         {
         case StartAtStartup:
-            successful = SetStartOnSystemStartup(value.toBool());
+            successful = GUIUtil::SetStartOnSystemStartup(value.toBool());
             break;
         case MinimizeToTray:
             fMinimizeToTray = value.toBool();
             settings.setValue("fMinimizeToTray", fMinimizeToTray);
             break;
         case MapPortUPnP:
-            {
-                bool bUseUPnP = value.toBool();
-                settings.setValue("fUseUPnP", bUseUPnP);
-                MapPort(bUseUPnP);
-            }
+            fUseUPnP = value.toBool();
+            settings.setValue("fUseUPnP", fUseUPnP);
+            MapPort();
             break;
         case MinimizeOnClose:
             fMinimizeOnClose = value.toBool();
             settings.setValue("fMinimizeOnClose", fMinimizeOnClose);
             break;
-        case ConnectSOCKS4:
-            fUseProxy = value.toBool();
-            settings.setValue("fUseProxy", fUseProxy);
+        case ProxyUse:
+            settings.setValue("fUseProxy", value.toBool());
+            ApplyProxySettings();
             break;
-        case ProxyIP:
-            {
-                // Use CAddress to parse and check IP
-                CNetAddr addr(value.toString().toStdString());
-                if (addr.IsValid())
-                {
-                    addrProxy.SetIP(addr);
-                    settings.setValue("addrProxy", addrProxy.ToStringIPPort().c_str());
-                }
-                else
-                {
-                    successful = false;
-                }
-            }
-            break;
-        case ProxyPort:
-            {
-                int nPort = atoi(value.toString().toAscii().data());
-                if (nPort > 0 && nPort < std::numeric_limits<unsigned short>::max())
-                {
-                    addrProxy.SetPort(nPort);
-                    settings.setValue("addrProxy", addrProxy.ToStringIPPort().c_str());
-                }
-                else
-                {
-                    successful = false;
-                }
-            }
-            break;
-        case Fee: {
+        case ProxyIP: {
+            proxyType proxy;
+            proxy.first = CService("127.0.0.1", 9050);
+            GetProxy(NET_IPV4, proxy);
+
+            CNetAddr addr(value.toString().toStdString());
+            proxy.first.SetIP(addr);
+            settings.setValue("addrProxy", proxy.first.ToStringIPPort().c_str());
+            successful = ApplyProxySettings();
+        }
+        break;
+        case ProxyPort: {
+            proxyType proxy;
+            proxy.first = CService("127.0.0.1", 9050);
+            GetProxy(NET_IPV4, proxy);
+
+            proxy.first.SetPort(value.toInt());
+            settings.setValue("addrProxy", proxy.first.ToStringIPPort().c_str());
+            successful = ApplyProxySettings();
+        }
+        break;
+        case ProxySocksVersion: {
+            proxyType proxy;
+            proxy.second = 5;
+            GetProxy(NET_IPV4, proxy);
+
+            proxy.second = value.toInt();
+            settings.setValue("nSocksVersion", proxy.second);
+            successful = ApplyProxySettings();
+        }
+        break;
+        case Fee:
             nTransactionFee = value.toLongLong();
-            settings.setValue("nTransactionFee", nTransactionFee);
-            }
+            settings.setValue("nTransactionFee", (qint64) nTransactionFee);
+            emit transactionFeeChanged(nTransactionFee);
             break;
-        case DisplayUnit: {
-            int unit = value.toInt();
-            nDisplayUnit = unit;
+        case ReserveBalance:
+            nReserveBalance = value.toLongLong();
+            settings.setValue("nReserveBalance", (qint64) nReserveBalance);
+            emit reserveBalanceChanged(nReserveBalance);
+            break;
+        case DisplayUnit:
+            nDisplayUnit = value.toInt();
             settings.setValue("nDisplayUnit", nDisplayUnit);
-            emit displayUnitChanged(unit);
+            emit displayUnitChanged(nDisplayUnit);
+            break;
+        case Language:
+            settings.setValue("language", value);
+            break;
+        case CoinControlFeatures: {
+            fCoinControlFeatures = value.toBool();
+            settings.setValue("fCoinControlFeatures", fCoinControlFeatures);
+            emit coinControlFeaturesChanged(fCoinControlFeatures);
             }
             break;
-        case DisplayAddresses: {
-            bDisplayAddresses = value.toBool();
-            settings.setValue("bDisplayAddresses", bDisplayAddresses);
-            }
-            break;
-        case DetachDatabases: {
-            fDetachDB = value.toBool();
-            settings.setValue("detachDB", fDetachDB);
-            }
-            break;
+        case MinimizeCoinAge:
+           fMinimizeCoinAge = value.toBool();
+           settings.setValue("fMinimizeCoinAge", fMinimizeCoinAge);
+           break;
         default:
             break;
         }
@@ -229,6 +217,16 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
 qint64 OptionsModel::getTransactionFee()
 {
     return nTransactionFee;
+}
+
+qint64 OptionsModel::getReserveBalance()
+{
+    return nReserveBalance;
+}
+
+bool OptionsModel::getCoinControlFeatures()
+{
+    return fCoinControlFeatures;
 }
 
 bool OptionsModel::getMinimizeToTray()
@@ -244,9 +242,4 @@ bool OptionsModel::getMinimizeOnClose()
 int OptionsModel::getDisplayUnit()
 {
     return nDisplayUnit;
-}
-
-bool OptionsModel::getDisplayAddresses()
-{
-    return bDisplayAddresses;
 }
