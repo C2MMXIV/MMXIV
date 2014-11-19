@@ -47,9 +47,7 @@ public:
         /** Is transaction confirmed? */
         ConfirmedRole,
         /** Formatted amount, without brackets when unconfirmed */
-        FormattedAmountRole,
-        /** Transaction status (TransactionRecord::Status) */
-        StatusRole
+        FormattedAmountRole
     };
 
     int rowCount(const QModelIndex &parent) const;
@@ -74,10 +72,8 @@ private:
     QVariant txStatusDecoration(const TransactionRecord *wtx) const;
     QVariant txAddressDecoration(const TransactionRecord *wtx) const;
 
-public slots:
-    void updateTransaction(const QString &hash, int status);
-    void updateConfirmations();
-    void updateDisplayUnit();
+private slots:
+    void update();
 
     friend class TransactionTablePriv;
 };

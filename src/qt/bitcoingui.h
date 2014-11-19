@@ -4,8 +4,6 @@
 #include <QMainWindow>
 #include <QSystemTrayIcon>
 
-#include <stdint.h>
-
 class TransactionTableModel;
 class ClientModel;
 class WalletModel;
@@ -13,10 +11,9 @@ class TransactionView;
 class OverviewPage;
 class AddressBookPage;
 class SendCoinsDialog;
-class SignVerifyMessageDialog;
+class MessagePage;
 class Notificator;
 class RPCConsole;
-class tradingDialog;
 
 QT_BEGIN_NAMESPACE
 class QLabel;
@@ -49,7 +46,7 @@ public:
         functionality.
     */
     void setWalletModel(WalletModel *walletModel);
-
+    
 protected:
     void changeEvent(QEvent *e);
     void closeEvent(QCloseEvent *event);
@@ -64,11 +61,10 @@ private:
 
     OverviewPage *overviewPage;
     QWidget *transactionsPage;
-	tradingDialog   *tradingDialogPage;
     AddressBookPage *addressBookPage;
     AddressBookPage *receiveCoinsPage;
     SendCoinsDialog *sendCoinsPage;
-    SignVerifyMessageDialog *signVerifyMessageDialog;
+    MessagePage *messagePage;
 
     QLabel *labelEncryptionIcon;
     QLabel *labelStakingIcon;
@@ -83,8 +79,7 @@ private:
     QAction *quitAction;
     QAction *sendCoinsAction;
     QAction *addressBookAction;
-    QAction *signMessageAction;
-    QAction *verifyMessageAction;
+    QAction *messageAction;
     QAction *aboutAction;
     QAction *receiveCoinsAction;
     QAction *optionsAction;
@@ -97,7 +92,6 @@ private:
     QAction *lockWalletAction;
     QAction *aboutQtAction;
     QAction *openRPCConsoleAction;
-	QAction *TradingAction;
 
     QSystemTrayIcon *trayIcon;
     Notificator *notificator;
@@ -106,11 +100,9 @@ private:
 
     QMovie *syncIconMovie;
 
-    uint64_t nWeight;
-
     /** Create the main UI actions. */
     void createActions();
-    /** Create the menu bar and sub-menus. */
+    /** Create the menu bar and submenus. */
     void createMenuBar();
     /** Create the toolbars */
     void createToolBars();
@@ -121,7 +113,7 @@ public slots:
     /** Set number of connections shown in the UI */
     void setNumConnections(int count);
     /** Set number of blocks shown in the UI */
-    void setNumBlocks(int count, int nTotalBlocks);
+    void setNumBlocks(int count);
     /** Set the encryption status as shown in the UI.
        @param[in] status            current encryption status
        @see WalletModel::EncryptionStatus
@@ -133,13 +125,16 @@ public slots:
     /** Asks the user whether to pay the transaction fee or to cancel the transaction.
        It is currently not possible to pass a return value to another thread through
        BlockingQueuedConnection, so an indirected pointer is used.
-       https://bugreports.qt-project.org/browse/QTBUG-10440
+       http://bugreports.qt.nokia.com/browse/QTBUG-10440
 
       @param[in] nFeeRequired       the required fee
       @param[out] payFee            true to pay the fee, false to not pay the fee
     */
     void askFee(qint64 nFeeRequired, bool *payFee);
     void handleURI(QString strURI);
+
+    void gotoMessagePage();
+    void gotoMessagePage(QString);
 
 private slots:
     /** Switch to overview (home) page */
@@ -152,19 +147,12 @@ private slots:
     void gotoReceiveCoinsPage();
     /** Switch to send coins page */
     void gotoSendCoinsPage();
-    /** Switch to trading page */
-    void gotoTradingPage();
-
-    /** Show Sign/Verify Message dialog and switch to sign message tab */
-    void gotoSignMessageTab(QString addr = "");
-    /** Show Sign/Verify Message dialog and switch to verify message tab */
-    void gotoVerifyMessageTab(QString addr = "");
 
     /** Show configuration dialog */
     void optionsClicked();
     /** Show about dialog */
     void aboutClicked();
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     /** Handle tray icon clicked */
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
 #endif
@@ -179,17 +167,15 @@ private slots:
     void backupWallet();
     /** Change encrypted wallet passphrase */
     void changePassphrase();
-    /** Ask for passphrase to unlock wallet temporarily */
+    /** Ask for pass phrase to unlock wallet temporarily */
     void unlockWallet();
-
     void lockWallet();
 
-    /** Show window if hidden, unminimize when minimized, rise when obscured or show if hidden and fToggleHidden is true */
-    void showNormalIfMinimized(bool fToggleHidden = false);
-    /** simply calls showNormalIfMinimized(true) for use in SLOT() macro */
+    /** Show window if hidden, unminimize when minimized */
+    void showNormalIfMinimized();
+    /** Hide window if visible, show if hidden */
     void toggleHidden();
 
-    void updateWeight();
     void updateStakingIcon();
 };
 

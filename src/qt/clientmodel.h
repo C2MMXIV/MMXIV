@@ -10,7 +10,6 @@ class CWallet;
 
 QT_BEGIN_NAMESPACE
 class QDateTime;
-class QTimer;
 QT_END_NAMESPACE
 
 /** Model for Bitcoin network client. */
@@ -19,7 +18,6 @@ class ClientModel : public QObject
     Q_OBJECT
 public:
     explicit ClientModel(OptionsModel *optionsModel, QObject *parent = 0);
-    ~ClientModel();
 
     OptionsModel *getOptionsModel();
 
@@ -41,31 +39,27 @@ public:
     QString formatFullVersion() const;
     QString formatBuildDate() const;
     QString clientName() const;
-    QString formatClientStartupTime() const;
 
 private:
     OptionsModel *optionsModel;
 
+    int cachedNumConnections;
     int cachedNumBlocks;
-    int cachedNumBlocksOfPeers;
+    QString cachedStatusBar;
 
     int numBlocksAtStartup;
 
-    QTimer *pollTimer;
-
-    void subscribeToCoreSignals();
-    void unsubscribeFromCoreSignals();
 signals:
     void numConnectionsChanged(int count);
-    void numBlocksChanged(int count, int countOfPeers);
+    void numBlocksChanged(int count);
 
     //! Asynchronous error notification
     void error(const QString &title, const QString &message, bool modal);
 
 public slots:
-    void updateTimer();
-    void updateNumConnections(int numConnections);
-    void updateAlert(const QString &hash, int status);
+
+private slots:
+    void update();
 };
 
 #endif // CLIENTMODEL_H

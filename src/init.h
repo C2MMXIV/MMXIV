@@ -8,9 +8,10 @@
 #include "wallet.h"
 
 extern CWallet* pwalletMain;
+
 void StartShutdown();
 void Shutdown(void* parg);
-bool AppInit2();
-std::string HelpMessage();
+bool AppInit(int argc, char* argv[]);
+bool AppInit2(int argc, char* argv[]);
 
 #endif
